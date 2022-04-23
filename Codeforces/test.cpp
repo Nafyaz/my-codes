@@ -2,46 +2,63 @@
 #define ll long long
 #define CHECK(x) cout << (#x) << " is " << (x) << endl;
 using namespace std;
-#define int ll
-int cnt[200005];
-vector<int> v;
-int chk(int x)
+// #define int ll
+vector<int> tre[200005 * 4];
+vector<int> merge(vector<int> a, vector<int> b)
 {
-    int laagbe = 0;
-    int ext = 1;
-    for(int i = 0; i < v.size(); i++)
+    vector<int> ret;
+    int l = 0, r = 0;
+    while(ret.size() <= 30)
     {
-        laagbe++;
-        if(x - i - 1 < v[i] - 1) ext += (v[i] - 1 ) - (x - i - 1);
+        if(l == a.size() && r == b.size()) break;
+        if(l == a.size()) ret.push_back(b[r++]);
+        else if(r == b.size()) ret.push_back(a[l++]);
+        else if(a[l] < b[r]) ret.push_back(a[l++]);
+        else ret.push_back(b[r++]);
     }
-    return laagbe + ext <= x;
-
+    return ret;
+}
+int arr[200005];
+void init(int n,int l,int r)
+{
+    tre[n].clear();
+    if(l == r)
+    {
+        tre[n].push_back(arr[l]);
+        return ;
+    }
+    int mid = (l + r) / 2;
+    init(2 * n, l, mid );
+    init(2 * n + 1, mid + 1, r);
+    tre[n] = merge(tre[2 * n], tre[2 * n + 1]);
+}
+vector<int> query(int n,int l,int r,int i,int j)
+{
+    if(i > r || j < l) return vector<int> ();
+    if(i <= l && j >= r) return tre[n];
+    int mid = (l + r) / 2;
+    return merge(query(2 *  n, l, mid, i, j), query(2 * n + 1, mid + 1, r, i, j));
 }
 void solve()
 {
     int n;
     cin >> n;
-    for(int i = 1; i <= n; i++) cnt[i] = 0;
-    for(int i = 2; i <= n; i++)
+    for(int i = 0; i < n; i++)
+        cin >> arr[i];
+
+    init(1, 0, n - 1);
+    int q;
+    cin >> q;
+    while(q--)
     {
-        int x;
-        cin >> x;
-        cnt[x]++;
+        int l, r;
+        cin >> l >> r;
+        l--,r--;
+        auto cur = query(1, 0, n - 1, l, r);
+        int ans = 2000000000;
+        for(int i = 0; i < cur.size() ; i++) for(int j = i + 1; j < cur.size(); j++) ans = min(ans, cur[i] | cur[j]);
+        cout << ans << '\n';
     }
-    v.clear();
-    for(int i = 1; i<= n; i++) if(cnt[i]) v.push_back(cnt[i]);
-    sort(v.begin(), v.end());
-    reverse(v.begin(), v.end());
-    int ans = n;
-    int sz = v.size();
-    for(int j = 20; j >= 0; j--)
-    {
-        if(ans - (1 << j) > sz && chk(ans - (1 << j)))
-        {
-            ans -= (1 << j);
-        }
-    }
-    cout << ans << '\n';
 
 }
 int32_t main()

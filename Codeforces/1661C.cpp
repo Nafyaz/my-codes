@@ -20,7 +20,6 @@ int main()
         for(i = 0; i < n; i++)
         {
             cin >> h[i];
-            temp[i] = h[i];
             mx = max(mx, h[i]);
         }
 

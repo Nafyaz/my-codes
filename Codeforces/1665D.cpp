@@ -16,7 +16,7 @@ int main()
         b = 3;
         for(i = 1; i <= 30; i++)
         {
-            cout << "! " << a-x << " " << b-x << endl;
+            cout << "? " << a-x << " " << b-x << endl;
             cin >> g;
 
             if(g%(2*a) == 0)
