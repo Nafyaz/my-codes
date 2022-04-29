@@ -1,50 +1,45 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
+#define ll long long
+
+ll a[100005];
+ll pos[100005];
 
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
 
-    int T;
+    ll T, n, m, prev_gap, prev_pos, i;
+
     cin >> T;
-    while (T--)
+
+    while(T--)
     {
-        int N;
-        cin >> N;
-        std::vector<int> A(N);
-        for (auto& a : A)
+        cin >> n >> m;
+
+
+        for(i = 0; i < n; i++)
         {
-            cin >> a;
-            a--;
-        }
-        std::vector<int> B(N);
-        for (auto& a : B)
-        {
-            cin >> a;
-            a--;
+            cin >> a[i];
         }
 
-        bool good = true;
-        std::vector<bool> seen(N);
-        std::vector<int> cnt(N);
-        int i, j;
-        for (i = N-1, j = N-1; i >= 0; )
+        sort(a, a+n);
+
+        prev_gap = 0;
+        prev_pos = -1;
+        for(i = 0; i < n; i++)
         {
-            int va = A[i];
-            int cnt_a = 0;
-            while (i >= 0 && A[i] == va) i--, cnt_a++;
-            while (j >= 0 && B[j] == va) j--, cnt[va]++;
-            cnt[va] -= cnt_a;
-            if (cnt[va] < 0)
-            {
-                good = false;
-                break;
-            }
+            prev_gap = max(prev_gap, a[i]);
+            pos[i] = prev_pos + prev_gap + 1;
+
+            prev_gap = a[i];
+            prev_pos = pos[i];
         }
-        if (j > 0) good = false;
-        cout << (good ? "YES" : "NO") << '\n';
+
+        if(pos[n-1] >= m || m-pos[n-1]-1 + a[0] < a[n-1])
+            cout << "NO\n";
+        else
+            cout << "YES\n";
     }
-
-    return 0;
 }
