@@ -2,12 +2,23 @@
 using namespace std;
 #define ll long long
 
+ll canTake(ll s, ll w, ll cnts, ll cntw, ll f)
+{
+    if(s > w)
+        return canTake(w, s, cntw, cnts, f);
+    
+    if(f <= cnts*s)
+        return f/s;
+    
+    return cnts + min(cntw, (f-cnts*s)/w);
+}
+
 int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    ll t, p, f, cnts, cntw, s, w, mine, his, swords, wAxes, ans;
+    ll t, p, f, cnts, cntw, s, w, i, mySword, hisSword, myAxe, hisAxe, ans;
 
     cin >> t;
 
@@ -17,109 +28,23 @@ int main()
         cin >> cnts >> cntw;
         cin >> s >> w;
 
+        if(s > w)
+        {
+            swap(s, w);
+            swap(cnts, cntw);
+        }
 
         ans = 0;
+        for(i = 0; i <= cnts; i++)
+        {
+            mySword = min(i, p/s);
+            hisSword = min(cnts-mySword, f/s);
 
-        //mySword, hisSword, myAxe, hisAxe
-        mine = his = 0;
+            myAxe = min(cntw, (p-mySword*s)/w);
+            hisAxe = min(cntw-myAxe, (f-hisSword*s)/w);
 
-        swords = min(p/s, cnts);
-        cnts -= swords;
-        p -= swords*s;
-        mine += swords;
-
-        swords = min(f/s, cnts);
-        cnts -= swords;
-        f -= swords*s;
-        his += swords;
-
-        wAxes = min(p/w, cntw);
-        cntw -= wAxes;
-        p -= wAxes;
-        mine += wAxes;
-
-        wAxes = min(f/w, cntw);
-        cntw -= wAxes;
-        f -= wAxes;
-        his += wAxes;
-
-        ans = max(ans, mine+his);
-
-        //hisSword, mySword, hisAxe, myAxe
-        mine = his = 0;
-
-        swords = min(f/s, cnts);
-        cnts -= swords;
-        f -= swords*s;
-        his += swords;
-
-        swords = min(p/s, cnts);
-        cnts -= swords;
-        p -= swords*s;
-        mine += swords;
-
-        wAxes = min(f/w, cntw);
-        cntw -= wAxes;
-        f -= wAxes;
-        his += wAxes;
-
-        wAxes = min(p/w, cntw);
-        cntw -= wAxes;
-        p -= wAxes;
-        mine += wAxes;
-
-        ans = max(ans, mine+his);
-
-
-        //myAxe, hisAxe, mySword, hisSword
-        mine = his = 0;
-
-        wAxes = min(p/w, cntw);
-        cntw -= wAxes;
-        p -= wAxes;
-        mine += wAxes;
-
-        wAxes = min(f/w, cntw);
-        cntw -= wAxes;
-        f -= wAxes;
-        his += wAxes;
-
-        swords = min(p/s, cnts);
-        cnts -= swords;
-        p -= swords*s;
-        mine += swords;
-
-        swords = min(f/s, cnts);
-        cnts -= swords;
-        f -= swords*s;
-        his += swords;
-
-        ans = max(ans, mine+his);
-
-        //hisAxe, myAxe, hisSword, mySword
-        mine = his = 0;
-
-        wAxes = min(f/w, cntw);
-        cntw -= wAxes;
-        f -= wAxes;
-        his += wAxes;
-
-        wAxes = min(p/w, cntw);
-        cntw -= wAxes;
-        p -= wAxes;
-        mine += wAxes;
-
-        swords = min(f/s, cnts);
-        cnts -= swords;
-        f -= swords*s;
-        his += swords;
-
-        swords = min(p/s, cnts);
-        cnts -= swords;
-        p -= swords*s;
-        mine += swords;
-
-        ans = max(ans, mine+his);
+            ans = max(ans, mySword+hisSword+myAxe+hisAxe);
+        }
 
         cout << ans << "\n";
     }

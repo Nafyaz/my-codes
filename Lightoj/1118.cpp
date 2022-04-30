@@ -49,7 +49,7 @@ int main()
         else if(r1+r2 <= c1c2)
             cout << "Case " << ++caseno << ": " << 0 << "\n";
 
-        else if(r1*r1 >= r2*r2 - c1c2*c1c2)
+        else if(r2*r2 <= r1*r1 + c1c2*c1c2)
         {
             AB = 2*(triArea(r1, r2, c1c2)/(c1c2/2));
 
@@ -62,7 +62,7 @@ int main()
             cout << "Case " << ++caseno << ": " << fixed << setprecision(6) << left + right << "\n";
         }
 
-        else if(r2 >= c1c2 + r1)
+        else if(r2 <= c1c2 + r1)
         {
             AB = 2*(triArea(r1, r2, c1c2)/(c1c2/2));
 

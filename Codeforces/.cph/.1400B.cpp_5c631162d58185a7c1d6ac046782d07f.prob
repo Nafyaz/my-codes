@@ -1,0 +1,1 @@
+{"name":"Local: 1400B","url":"/media/casio991ms/E/My codes/Codeforces/1400B.cpp","tests":[{"id":1651294435545,"input":"3\n33 27\n6 10\n5 6\n100 200\n10 10\n5 5\n1 19\n1 3\n19 5","output":"11\n20\n3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/media/casio991ms/E/My codes/Codeforces/1400B.cpp","group":"local","local":true}
