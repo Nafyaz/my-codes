@@ -1,0 +1,1 @@
+{"name":"Local: 1674C","url":"/media/casio991ms/E/My codes/Codeforces/1674C.cpp","tests":[{"id":1651502851466,"input":"3\naaaa\na\naa\nabc\na\nb\n","output":"1\n-1\n2\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/media/casio991ms/E/My codes/Codeforces/1674C.cpp","group":"local","local":true}

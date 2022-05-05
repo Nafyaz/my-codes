@@ -19,5 +19,5 @@ int main()
     for(i = 1; i <= k; i++)
         cin >> h[i];
 
-
+    
 }

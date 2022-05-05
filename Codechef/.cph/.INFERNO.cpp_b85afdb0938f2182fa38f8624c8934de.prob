@@ -1,0 +1,1 @@
+{"name":"Local: INFERNO","url":"/media/casio991ms/E/My codes/Codechef/INFERNO.cpp","tests":[{"id":1651675742972,"input":"4\n5 4\n2 2 4 1 1\n3 5\n5 4 5\n4 4\n4 4 4 4\n3 10\n7 8 9","output":"4\n3\n4\n3"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/media/casio991ms/E/My codes/Codechef/INFERNO.cpp","group":"local","local":true}

@@ -1,0 +1,1 @@
+{"name":"Local: 1673B","url":"/media/casio991ms/E/My codes/Codeforces/1673B.cpp","tests":[{"id":1651331107952,"input":"5\naba\nabb\nabc\naaaaa\nabcba","output":"YES\nNO\nYES\nYES\nNO"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/media/casio991ms/E/My codes/Codeforces/1673B.cpp","group":"local","local":true}
