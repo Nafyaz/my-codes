@@ -2,27 +2,108 @@
 using namespace std;
 #define ll long long
 
-class logo
-{
-    ll mnL, mxL;
-    char c;
-};
-
+ll x[3], y[3];
 ll sq;
-logo L[3];
+string grid[200];
 
+void paint(ll stx, ll sty, ll h, ll w, ll c)
+{
+    ll i, j;
+    for(i = stx; i < stx+h; i++)
+    {
+        for(j = sty; j < sty+w; j++)
+            grid[i][j] = c;
+    }
+}
 
+void remove(ll stx, ll sty, ll h, ll w)
+{
+    ll i, j;
+    for(i = stx; i < stx+h; i++)
+    {
+        for(j = sty; j < sty+w; j++)
+        {
+            grid[i][j] = '.';
+        }
+    }
+}
+
+bool check()
+{
+    ll i, j;
+    for(i = 0; i < sq; i++)
+    {
+        for(j = 0; j < sq; j++)
+        {
+            if(grid[i][j] == '.')
+                return 0;
+        }
+    }
+
+    return 1;
+}
+
+bool call(ll pos, ll mask)
+{
+    // cout << "pos: " << pos << "; mask: " << mask << "\n";
+    if(pos == 3)
+        return check();
+
+    ll i, stx, sty;
+    bool empty;
+
+    for(i = 0; i < 3; i++)
+    {
+        if((mask & (1 << i)) == 0)
+        {     
+            empty = 0;        
+            for(stx = 0; stx < sq && !empty; stx++)
+            {
+                for(sty = 0; sty < sq && !empty; sty++)
+                {
+                    // cout << "stx: " << stx << "; sty: " << sty << "; grid[stx][sty] = " << grid[stx][sty] << "\n";
+                    if(grid[stx][sty] == '.')
+                        empty = 1;
+                }
+            }
+
+            stx--;
+            sty--;
+
+            if(stx + x[i] <= sq && sty + y[i] <= sq)
+            {
+                paint(stx, sty, x[i], y[i], 'A'+i);
+                if(call(pos+1, mask | (1 << i)))
+                    return 1;
+                remove(stx, sty, x[i], y[i]);
+            }
+
+            if(stx + y[i] <= sq && sty + x[i] <= sq)
+            {
+                paint(stx, sty, y[i], x[i], 'A'+i);
+                if(call(pos+1, mask | (1 << i)))
+                    return 1;
+                remove(stx, sty, y[i], x[i]);
+            }
+        }
+    }
+
+    return 0;
+}
 
 int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    ll x1, y1, x2, y2, x3, y3;
+    ll i, j, sum = 0;
 
-    cin >> x1 >> y1 >> x2 >> y2 >> x3 >> y3;
+    for(i = 0; i < 3; i++)
+    {
+        cin >> x[i] >> y[i];
+        sum += x[i]*y[i];
+    }
 
-    ll sum = x1*y1 + x2*y2 + x3*y3;
     sq = sqrt(sum);
 
     if(sq*sq != sum)
@@ -31,20 +112,26 @@ int main()
         return 0;
     }
 
-    L[0].mnL = min(x1, y1);
-    L[0].mxL = max(x1, y1);
-    L[0].c = 'A';
+    for(i = 0; i < sq; i++)
+        grid[i] = string(sq, '.');
 
-    L[1].mnL = min(x2, y2);
-    L[1].mxL = max(x2, y2);
-    L[1].c = 'B';
-
-    L[2].mnL = min(x3, y3);
-    L[2].mxL = max(x3, y3);
-    L[2].c = 'C';
-
-    if(L[0].mxL >= L[1].mxL && L[0].mxL >= L[2].mxL)
+    // for(i = 0; i < sq; i++)
+    // {
+    //     for(j = 0; j < sq; j++)
+    //         cout << grid[i][j];
+    //     cout << "\n";
+    // }
+    
+    if(call(0, 0))
     {
-
+        cout << sq << "\n";
+        for(i = 0; i < sq; i++)
+        {
+            for(j = 0; j < sq; j++)
+                cout << grid[i][j];
+            cout << "\n";
+        }
     }
+    else
+        cout << "-1";
 }

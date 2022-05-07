@@ -4,6 +4,7 @@ using namespace std;
 #define mod 1000000007
 
 ll dp[102][100005];
+ll pref[102][100005];
 ll a[102];
 
 int main()
@@ -11,30 +12,46 @@ int main()
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    ll n, k, i, j;
+    ll N, K, i, j, k;
 
-    cin >> n >> k;
+    cin >> N >> K;
 
-    for(i = 1; i <= n; i++)
+    for(i = 1; i <= N; i++)
         cin >> a[i];
 
-    for(i = 0; i <= n; i++)
-        dp[i][0] = 1;
-
-    for(j = 1; j <= k; j++)
+    for(i = 0; i <= N; i++)
     {
-        for(i = 1; i <= n; i++)
+        for(j = 0; j <= K; j++)
         {
-            dp[i][j] = (dp[i-1][j] + dp[i][j-1];
+            if(!i && !j)
+                dp[i][j] = 1;
+            else if(!j)
+                dp[i][j] = 1;
+            else if(!i)
+                dp[i][j] = 0;
+            else
+                dp[i][j] = ((pref[i-1][j+1] - pref[i-1][max(0LL, j-a[i])]) % mod + mod) % mod;
+     
+            pref[i][j+1] = pref[i][j] + dp[i][j];
         }
     }
 
-//    cout << dp[n][k];
+    // cout << "dp:\n";
+    // for(i = 0; i <= N; i++)
+    // {
+    //     for(j = 0; j <= K; j++)
+    //         cout << dp[i][j] << " ";
+    //     cout << "\n";
+    // }
+    // cout << "\n";
 
-    for(i = 0; i <= n; i++)
-    {
-        for(j = 0; j <= k; j++)
-            cout << dp[i][j] << " ";
-        cout << "\n";
-    }
+    // cout << "pref:\n";
+    // for(i = 0; i <= N; i++)
+    // {
+    //     for(j = 0; j <= K+1; j++)
+    //         cout << pref[i][j] << " ";
+    //     cout << "\n";
+    // }
+
+   cout << dp[N][K];
 }

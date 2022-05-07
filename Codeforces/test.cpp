@@ -1,45 +1,29 @@
 #include<bits/stdc++.h>
+#define long long long
 using namespace std;
-#define ll long long
-
-ll a[100005];
-ll pos[100005];
-
+long a1,b1,a2,b2,one,two,f;
+map<pair<long,long>,long>mp;
 int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
-
-    ll T, n, m, prev_gap, prev_pos, i;
-
-    cin >> T;
-
-    while(T--)
+    cout.tie(0);
+    for(long i=1;i<=4;i++)
     {
-        cin >> n >> m;
-
-
-        for(i = 0; i < n; i++)
-        {
-            cin >> a[i];
-        }
-
-        sort(a, a+n);
-
-        prev_gap = 0;
-        prev_pos = -1;
-        for(i = 0; i < n; i++)
-        {
-            prev_gap = max(prev_gap, a[i]);
-            pos[i] = prev_pos + prev_gap + 1;
-
-            prev_gap = a[i];
-            prev_pos = pos[i];
-        }
-
-        if(pos[n-1] >= m || m-pos[n-1]-1 + a[0] < a[n-1])
-            cout << "NO\n";
-        else
-            cout << "YES\n";
+        cin>>a1>>b1>>a2>>b2;
+        if(a1==a2)one++;
+        else if(b1==b2)two++;
+        else f=1;
+        mp[{a1,b1}]++;
+        mp[{a2,b2}]++;
     }
+    if(one!=2&&two!=2)f=1;
+    if(mp.size()!=4)f=1;
+    for(map<pair<long,long>,long>::iterator it=mp.begin();it!=mp.end();it++)
+    {
+        if(it->second!=2)f=1;
+    }
+    if(f)cout<<"NO"<<endl;
+    else cout<<"YES"<<endl;
+    return 0;
 }
