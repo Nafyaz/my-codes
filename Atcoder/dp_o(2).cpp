@@ -1,6 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define ll long long
+#define mod 1000000007
 
 ll n, a[25][25];
 ll dp[3000006];
@@ -20,9 +21,18 @@ int main()
             cin >> a[i][j];
     }
 
+    dp[0] = 1;
     for(mask = 0; mask < (1LL << n); mask++)
     {
         i = __builtin_popcount(mask);
-        for(j = 0)
+        for(j = 0; j < n; j++)
+        {
+            if(a[i][j] && (mask & (1LL << j)) == 0)
+            {
+                dp[mask | (1LL << j)] = (dp[mask | (1LL << j)] + dp[mask]) % mod;
+            }
+        }
     }
+
+    cout << dp[(1LL << n) - 1];
 }

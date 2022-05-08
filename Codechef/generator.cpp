@@ -4,19 +4,25 @@ using namespace std;
 
 int main()
 {
-    freopen("in.txt", "w", stdout);
-    // ios::sync_with_stdio(0);
-    // cin.tie(0);
+    ios::sync_with_stdio(0);
+    cin.tie(0);
 
-    ll T = 50, n, i;
+    mt19937 mt(time(nullptr)); 
+
+    ll T = 2, n, i;
 
     cout << T << "\n";
     while(T--)
     {
-        n = rand() % 5 + 1;
+        n = rand() % 999 + 2;
         cout << n << "\n";
         for(i = 1; i <= n; i++)
-            cout << rand() % 9 + 1 << " ";
+        {
+            if(rand() % 2 == 1)
+                cout << mt()%10000000000 << "\n";
+            else
+                cout << - (ll)(mt()%10000000000) << "\n";
+        }
         cout << "\n";
     }
 }
