@@ -1,0 +1,1 @@
+{"name":"Local: 1037","url":"/home/casio991ms/Desktop/my-codes/Lightoj/1037.cpp","tests":[{"id":1652872200437,"input":"2\n\n3\n10 10 10\n010\n100\n111\n\n3\n3 5 7\n030\n500\n007\n","output":"Case 1: 30\nCase 2: 12\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/home/casio991ms/Desktop/my-codes/Lightoj/1037.cpp","group":"local","local":true}
