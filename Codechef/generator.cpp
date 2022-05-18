@@ -1,28 +1,26 @@
-#include<bits/stdc++.h>
-using namespace std;
-#define ll long long
 
+#include <iostream>
+using namespace 
+
+
+std;
+  
+// One function works for all data types.  This would work
+// even for user defined types if operator '>' is overloaded
+template <typename T> 
+int p = 10;
+T myMax(T x, T y)
+{
+    return (x > y) ? x : y;
+}
+  
 int main()
 {
-    ios::sync_with_stdio(0);
-    cin.tie(0);
-
-    mt19937 mt(time(nullptr)); 
-
-    ll T = 2, n, i;
-
-    cout << T << "\n";
-    while(T--)
-    {
-        n = rand() % 999 + 2;
-        cout << n << "\n";
-        for(i = 1; i <= n; i++)
-        {
-            if(rand() % 2 == 1)
-                cout << mt()%10000000000 << "\n";
-            else
-                cout << - (ll)(mt()%10000000000) << "\n";
-        }
-        cout << "\n";
-    }
+    cout << myMax<int>(3, 7) << endl; // Call myMax for int
+    cout << myMax<double>(3.0, 7.0)
+         << endl; // call myMax for double
+    cout << myMax<char>('g', 'e')
+         << endl; // call myMax for char
+  
+    return 0;
 }

@@ -1,0 +1,1 @@
+{"name":"Local: REIGN","url":"/media/casio991ms/E/My codes/Codechef/REIGN.cpp","tests":[{"id":1652529910766,"input":"3\n5 3\n-1 1 2 3 -1\n8 3\n5 5 -1 -2 3 -1 2 -2\n6 0\n5 -1 5 0 -1 9\n","output":"-2\n12\n18\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/media/casio991ms/E/My codes/Codechef/REIGN.cpp","group":"local","local":true}

@@ -1,0 +1,1 @@
+{"name":"Local: 1119","url":"/media/casio991ms/E/My codes/Lightoj/1119.cpp","tests":[{"id":1652517971290,"input":"2\n2\n10 10\n9000 10\n3\n14 23 0\n0 14 0\n1000 9500 14\n","output":"Case 1: 30\nCase 2: 42\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/media/casio991ms/E/My codes/Lightoj/1119.cpp","group":"local","local":true}
