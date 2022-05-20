@@ -1,129 +1,66 @@
+#include <iostream>
 #include <bits/stdc++.h>
+#define ll long long
 using namespace std;
-
-template <typename T, class bin_op>
-struct segment_tree
-{
-#define lc i * 2
-#define rc i * 2 + 1
-#define m (l + r) / 2
-
-    T e; // default value
-    bin_op op;
-    vector<T> tr;
-
-    segment_tree(int _n, T _e, bin_op _op) : e(_e), op(_op)
-    {
-        tr = vector<T>(4 * _n + 5, e);
-    }
-
-    void update(int l, int r, int i, int u, T v)
-    {
-        if (l == r)
-        {
-            tr[i] = op(tr[i], v);
-        }
-        else
-        {
-            if (u <= m)
-            {
-                update(l, m, lc, u, v);
-            }
-            else
-            {
-                update(m + 1, r, rc, u, v);
-            }
-            tr[i] = op(tr[lc], tr[rc]);
-        }
-    }
-
-    T query(int l, int r, int i, int L, int R)
-    {
-        if (l > R || r < L || L > R)
-        {
-            return e;
-        }
-        else if (L <= l && r <= R)
-        {
-            return tr[i];
-        }
-        else
-        {
-            return op(query(l, m, lc, L, R),
-                      query(m + 1, r, rc, L, R));
-        }
-    }
-
-#undef lc
-#undef rc
-#undef m
-};
-
+#define ff first 
+#define ss second 
+#define ld long double
+#define rep(i, a, b) for (long long i = a; i < b; i++)
+#define all(v) v.begin(),v.end()
 int main()
-{
-    ios_base::sync_with_stdio(false);
-    cin.tie(nullptr);
-    int n, q;
-    cin >> n >> q;
-    vector<int> a(n);
-    for (int i = 0; i < n; i++)
+{ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    ll t;
+    cin>>t;
+    while(t--)
     {
-        cin >> a[i];
-    }
-    vector<int> l(n), r(n);
-    segment_tree get_right(n, n, [](int u, int v)
-                           { return min(u, v); });
-    for (int i = n - 2; i >= 0; i--)
-    {
-        r[i] = a[i] < a[i + 1] ? get_right.query(1, n, 1, a[i], a[i + 1]) : 0;
-        get_right.update(1, n, 1, a[i + 1], i + 1);
-    }
-    segment_tree get_left(n, -1, [](int u, int v)
-                          { return max(u, v); });
-    for (int i = 0; i < n - 1; i++)
-    {
-        l[i] = a[i] < a[i + 1] ? get_left.query(1, n, 1, a[i], a[i + 1]) : n - 1;
-        get_left.update(1, n, 1, a[i], i);
-    }
-    vector<vector<pair<int, int>>> eve(n + 1), que(n + 1);
-    for (int i = 0; i < n - 1; i++)
-    {
-        // left of query must be in (l[i], i]
-        // right of query must be in [i + 1, r[i])
-        // l[i] is in [-1, n - 1], r[i] is is [0, n]
-        // use segment tree as prefix sum
-        if (l[i] < i && i + 1 < r[i])
+        ll o1,o2;
+        cin>>o1>>o2;
+        ll n=o1*o2;
+        vector<ll>v(2*n+1);
+        vector<ll>vec(n+1);
+        v[0]=0;
+        rep(i,1,n+1)
         {
-            eve[l[i] + 1].push_back({i + 1, 1});
-            eve[l[i] + 1].push_back({r[i], -1});
-            eve[i + 1].push_back({i + 1, -1});
-            eve[i + 1].push_back({r[i], 1});
+            ll x;
+            cin>>x;
+            vec[i]=x;
+            if(x==1)
+            v[i]=v[i-1]+1;
+            else v[i]=v[i-1];
         }
-    }
-    vector<int> ans(q);
-    for (int i = 0; i < q; i++)
-    {
-        int l, r;
-        cin >> l >> r;
-        l--;
-        r--;
-        ans[i] = r - l + 1;
-        que[l].push_back({r, i});
-    }
-    segment_tree rectangle(n, 0, plus<int>());
-    for (int i = 0; i <= n; i++)
-    {
-        for (auto [r, val] : eve[i])
+        rep(i,n+1,2*n+1)
         {
-            rectangle.update(0, n, 1, r, val);
+            if(vec[i-n]==1)
+            v[i]=v[i-1]+1;
+            else v[i]=v[i-1];
         }
-        for (auto [r, ind] : que[i])
+        bool check=false;
+        ll j=0;
+        ll y=o2;
+        while(y>0)
         {
-            ans[ind] -= rectangle.query(0, n, 1, 0, r);
+            ll x=o1;
+            ll i=o2+j;
+            ll cnt=0;
+            while(x>0)
+            {
+                if(v[i]-v[i-o2]>(ll)(o2/2))
+                {cnt++;}
+                x--;
+                i+=o2;
+            }
+            if(cnt>o1/2)
+            {check=true;
+           
+            break;
+            }
+            y--;
+            j++;
         }
-    }
-    for (int i = 0; i < q; i++)
-    {
-        cout << ans[i] << "\n";
-    }
+        if(check)
+        cout<<"1\n";
+        else cout<<"0\n";
+
+    }   
 }

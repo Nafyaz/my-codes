@@ -1,26 +1,22 @@
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long
 
-#include <iostream>
-using namespace 
-
-
-std;
-  
-// One function works for all data types.  This would work
-// even for user defined types if operator '>' is overloaded
-template <typename T> 
-int p = 10;
-T myMax(T x, T y)
-{
-    return (x > y) ? x : y;
-}
-  
 int main()
 {
-    cout << myMax<int>(3, 7) << endl; // Call myMax for int
-    cout << myMax<double>(3.0, 7.0)
-         << endl; // call myMax for double
-    cout << myMax<char>('g', 'e')
-         << endl; // call myMax for char
-  
-    return 0;
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+    ll i, j, n = 3;
+
+    cout << (1LL << n) - 1 << "\n";
+
+    for(i = 0; i < (1LL << n); i++)
+    {
+        cout << "3 1\n";
+        for(j = 0; j < n; j++)        
+            cout << ((i & (1LL << j)) >> j) << " ";
+        
+        cout << "\n";
+    }
 }

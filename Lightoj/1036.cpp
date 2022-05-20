@@ -4,20 +4,18 @@ using namespace std;
 
 ll m, n;
 ll Uranium[502][502], Radium[502][502];
-ll dp[502][502][102][102];
+ll prefUranium[502][502], prefRadium[502][502];
+ll dp[502][502];
 
-ll call(ll row, ll col, ll u, ll r)
+ll call(ll row, ll col)
 {
-    if(dp[row][col][u][r] != -1)
-        return dp[row][col][u][r];
+    if(dp[row][col] != -1)
+        return dp[row][col];
     
-    if(row == 0)
-        return dp[row][col][u][r] = r;
-    if(col == 0)
-        return dp[row][col][u][r] = u;
+    if(row == 0 || col == 0)
+        return dp[row][col] = 0;
 
-    ll ret = 0;
-    ret = max(ret, call(row-1, col, ))
+    return dp[row][col] = max(call(row-1, col) + prefUranium[row][col], call(row, col-1) + prefRadium[row][col]);
 }
 
 int main()
@@ -36,13 +34,19 @@ int main()
         for(i = 1; i <= m; i++)
         {
             for(j = 1; j <= n; j++)
+            {
                 cin >> Uranium[i][j];
+                prefUranium[i][j] = prefUranium[i][j-1] + Uranium[i][j];
+            }
         }
 
-        for(i = 0; i < m; i++)
+        for(i = 1; i <= m; i++)
         {
-            for(j = 0; j < n; j++)
+            for(j = 1; j <= n; j++)
+            {
                 cin >> Radium[i][j];
+                prefRadium[i][j] = prefRadium[i-1][j] + Radium[i][j];
+            }
         }
 
         memset(dp, -1, sizeof dp);
