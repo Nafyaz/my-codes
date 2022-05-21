@@ -1,66 +1,75 @@
-#include <iostream>
-#include <bits/stdc++.h>
-#define ll long long
+#include<cstdio>
+#include<cstdlib>
+#include<cmath>
+#include<cstring>
+#include<string>
+#include<iostream>
+#include<algorithm>
+#include<vector>
+#include<stack>
+#include<deque>
+#include<queue>
+#include<map>
+#include<sstream>
 using namespace std;
-#define ff first 
-#define ss second 
-#define ld long double
-#define rep(i, a, b) for (long long i = a; i < b; i++)
-#define all(v) v.begin(),v.end()
-int main()
-{ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    ll t;
-    cin>>t;
-    while(t--)
-    {
-        ll o1,o2;
-        cin>>o1>>o2;
-        ll n=o1*o2;
-        vector<ll>v(2*n+1);
-        vector<ll>vec(n+1);
-        v[0]=0;
-        rep(i,1,n+1)
-        {
-            ll x;
-            cin>>x;
-            vec[i]=x;
-            if(x==1)
-            v[i]=v[i-1]+1;
-            else v[i]=v[i-1];
-        }
-        rep(i,n+1,2*n+1)
-        {
-            if(vec[i-n]==1)
-            v[i]=v[i-1]+1;
-            else v[i]=v[i-1];
-        }
-        bool check=false;
-        ll j=0;
-        ll y=o2;
-        while(y>0)
-        {
-            ll x=o1;
-            ll i=o2+j;
-            ll cnt=0;
-            while(x>0)
-            {
-                if(v[i]-v[i-o2]>(ll)(o2/2))
-                {cnt++;}
-                x--;
-                i+=o2;
-            }
-            if(cnt>o1/2)
-            {check=true;
-           
-            break;
-            }
-            y--;
-            j++;
-        }
-        if(check)
-        cout<<"1\n";
-        else cout<<"0\n";
 
-    }   
+typedef long long int L;
+typedef unsigned long long int U;
+
+char str[110][110];
+int  arrl[110][110];
+int  arru[110][110];
+char d[110][110];
+main()
+{
+	int tc;
+	cin>>tc;
+	while(tc--)
+	{
+		int m,n;
+		scanf("%d %d", &n, &m);
+		for(int i = 0;i<n;i++)
+			scanf("%s", &str[i]);
+		arru[0][0] = (str[0][0] == '1');
+		arrl[0][0] = (str[0][0] == '1');
+		for(int i = 0;i<n;i++)
+		{
+			for(int j = 0;j<m;j++)
+			{
+				if(i > 0 && j > 0)
+				{
+					arru[i][j] = min(arru[i-1][j] + (str[i][j-1] == '1'), arrl[i-1][j]);
+					arrl[i][j] = min(arru[i][j-1], arrl[i][j-1] + (str[i-1][j] == '1'));
+				}
+				else if(i > 0)
+				{
+					arru[i][j] = min(arrl[i-1][j], arru[i-1][j]);
+					arrl[i][j] = 10007;
+				}
+				else if(j > 0)
+				{
+					arrl[i][j] = min(arrl[i][j-1], arru[i][j-1]);
+					arru[i][j] = 10007;
+				}
+				if(i < n-1)
+				{
+					arru[i][j] += (str[i+1][j] == '1');
+					arrl[i][j] += (str[i+1][j] == '1');
+				}
+				if(j < m-1)
+				{
+					arru[i][j] += (str[i][j+1] == '1');
+					arrl[i][j] += (str[i][j+1] == '1');
+				}
+			}
+		}
+		/*cout<<"********************************"<<endl;
+		for(int i = 0;i<n;i++)
+		{
+			for(int j = 0;j<m;j++)
+				printf("%d/%d ", arrl[i][j], arru[i][j]);
+			cout<<endl;
+		}*/
+		printf("%d\n", min(arru[n-1][m-1],arrl[n-1][m-1]));
+	}
 }
