@@ -1,40 +1,51 @@
 #include <bits/stdc++.h>
-
 using namespace std;
 
-const int MOD = 1e9 + 7;
-const int MAX_N = 21;
+const int N = 2e5 + 5;
+int a[N], l, r; 
+set <int> s, s2;
+ 
+void solve() {
+    s.clear();
+    cin >> l >> r; 
+    for (int i = l; i <= r; ++i) {
+        cin >> a[i];
+        s.insert(a[i]);
+    }
 
-bool compat[MAX_N][MAX_N];
-int dp[1 << MAX_N];
+    int mul;
+    for (mul = 1; l % 2 == 0 && r % 2 == 1; l >>= 1, r >>= 1, mul <<= 1) {
+        s2.clear();
+        for (int i: s) 
+          s2.insert(i >> 1);
+        swap(s, s2);   
+    }
+
+    int ans;
+    if (l % 2 == 0) 
+      ans = r;
+    else 
+      ans = l;
+
+    for (int i: s) {
+        if (s.find(i ^ 1) == s.end()) {
+            int cur = i ^ ans;
+            bool f = true;
+            for (int j : s)
+                f &= ((cur ^ j) >= l && (cur ^ j) <= r);
+            if (f) {
+                ans = cur;
+                break;
+            }
+        }
+    }
+    cout << ans * mul << '\n';
+}
 
 int main() {
-	int N;
-	cin >> N;
-	for (int i = 0; i < N; ++i) {
-		for (int j = 0; j < N; ++j) {
-			cin >> compat[i][j];
-		}
-	}
-
-	dp[0] = 1;
-
-	for (int s = 0; s < (1 << N); s++) {
-		int pair_num = __builtin_popcount(s);
-		for (int w = 0; w < N; w++) {
-			/*
-			 * check that
-			 * 1. this woman hasn't been paired already
-			 * 2. she's also compatible with the {pair_num + 1}th man
-			 */
-			if ((s & (1 << w)) || !compat[pair_num][w])
-				continue;
-
-			// add the amount to future dp states
-			dp[s | (1 << w)] += dp[s];
-			dp[s | (1 << w)] %= MOD;
-		}
-	}
-
-   	cout << dp[(1 << N) - 1] << endl;
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    int t; cin >> t;
+    while (t--) solve();
+    return 0;
 }

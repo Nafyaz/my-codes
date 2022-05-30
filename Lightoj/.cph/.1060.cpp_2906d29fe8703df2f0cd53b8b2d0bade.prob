@@ -1,0 +1,1 @@
+{"name":"Local: 1060","url":"e:\\My Codes\\Lightoj\\1060.cpp","tests":[{"id":1653314862020,"input":"3\naabb 1\naabb 6\naabb 7\n","output":"Case 1: aabb\nCase 2: bbaa\nCase 3: Impossible\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\My Codes\\Lightoj\\1060.cpp","group":"local","local":true}

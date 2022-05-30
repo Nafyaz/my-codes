@@ -1,0 +1,1 @@
+{"name":"Local: STRMRG","url":"e:\\My Codes\\Codechef\\STRMRG.cpp","tests":[{"id":1653386294717,"input":"1\n4 4\nabab\nbaba","output":"5"},{"id":1653386402485,"input":"1\n1 1\na\nb","output":"2"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\My Codes\\Codechef\\STRMRG.cpp","group":"local","local":true}

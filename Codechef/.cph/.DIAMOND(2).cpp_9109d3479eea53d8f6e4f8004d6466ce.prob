@@ -1,0 +1,1 @@
+{"name":"Local: DIAMOND(2)","url":"e:\\My Codes\\Codechef\\DIAMOND(2).cpp","tests":[{"id":1653371576705,"input":"4\n1\n100\n2\n42 0\n3\n1 4 9\n4\n5 5 5 5","output":"100.000\n21.000\n9.500\n10.000"},{"id":1653373938895,"input":"","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\My Codes\\Codechef\\DIAMOND(2).cpp","group":"local","local":true}

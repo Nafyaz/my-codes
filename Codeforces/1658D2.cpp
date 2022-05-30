@@ -1,60 +1,52 @@
 #include<bits/stdc++.h>
 using namespace std;
 #define ll long long
+#define show(x) cout << #x << ": " << x << "; "
 
 ll a[200005];
-ll Log[200005];
+
+void solve()
+{
+    ll l, r, i, bit, cntA, cnt, x;
+
+    cin >> l >> r;
+
+    for(i = l; i <= r; i++)
+        cin >> a[i];
+
+    x = 0;
+    for(bit = 1; bit < (1LL << 17); bit *= 2)
+    {
+        cntA = cnt = 0;
+        for(i = l; i <= r; i++)
+        {
+            cntA += ((a[i] & bit) != 0);
+            cnt += ((i & bit) != 0);
+        }
+
+        if(cnt != cntA)
+            x += bit;
+
+        // show(bit);
+        // show(cnt);
+        // show(cntA);
+        // cout << "\n";
+    }
+
+    cout << x << "\n";
+}
 
 int main()
 {
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    ll t, l, r, i, j, mx, mn, mxa, flag;
-    for(i = 2; i < 200005; i++)
-        Log[i] = Log[i/2] + 1;
+    ll T;
 
-    cin >> t;
+    cin >> T;
 
-    while(t--)
+    while(T--)
     {
-        cin >> l >> r;
-
-        mxa = INT_MIN;
-        for(i = l; i <= r; i++)
-        {
-            cin >> a[i];
-            mxa = max(mxa, a[i]);
-        }
-
-        cout << "mxa: " << Log[mxa] << "; ";
-        mxa = (1LL << (Log[mxa] + 1)) - 1;
-        cout << "mxa: " << mxa << "\n";
-
-        for(i = 0; i <= mxa; i++)
-        {
-            mn = INT_MAX;
-            mx = INT_MIN;
-            flag = 1;
-
-            for(j = l; j <= r; j++)
-            {
-                mx = max(mx, a[j]^i);
-                mn = min(mn, a[j]^i);
-
-                if(mx > r || mn < l)
-                {
-                    flag = 0;
-                    break;
-                }
-
-            }
-
-            if(flag)
-            {
-                cout << i << "\n";
-                break;
-            }
-        }
+        solve();
     }
 }

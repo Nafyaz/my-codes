@@ -1,0 +1,1 @@
+{"name":"Local: 103430L","url":"e:\\My Codes\\Codeforces GYM\\103430L.cpp","tests":[{"id":1653199274435,"input":"3\n5 1 2\n","output":"4"},{"id":1653199761682,"input":"4\n8 1 2 7","output":"7"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\My Codes\\Codeforces GYM\\103430L.cpp","group":"local","local":true}

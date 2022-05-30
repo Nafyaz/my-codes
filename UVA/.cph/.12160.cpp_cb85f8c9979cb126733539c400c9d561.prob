@@ -1,0 +1,1 @@
+{"name":"Local: 12160","url":"e:\\My Codes\\UVA\\12160.cpp","tests":[{"id":1653491158715,"input":"0000 9999 1\n1000\n0000 9999 1\n0001\n5234 1212 3\n1023 0101 0001\n0 0 0","output":"Case 1: Permanently Locked\nCase 2: 9999\nCase 3: 48"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\My Codes\\UVA\\12160.cpp","group":"local","local":true}
