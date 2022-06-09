@@ -5,21 +5,26 @@ using namespace std;
 #define ff first
 #define ss second
 #define show(x) cout << #x << ": " << x << "; "
-#define mod 1000000007
-#define maxN 200005
 
-ll arr[maxN];
+ll pos[102];
 
 void solve(ll caseno)
 {
-    ll n, t, i;
-    
-    cin >>n >> t;
+    ll n, i, j, a, ans = 0;
 
-    for(i = 0; i < n; i++)
-        cin >> arr[i];
+    cin >> n;
 
+    for(i = 1; i <= n; i++)    
+    {
+        cin >> a;        
+        ans += min(pos[a], i-pos[a]-1);
+
+        for(j = 1; j <= n; j++)
+            pos[j] += (pos[j] > pos[a]);
+        pos[i] = pos[a] + 1;
+    }
     
+    cout << ans << "\n";
 }
 
 int main()

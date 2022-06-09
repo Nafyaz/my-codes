@@ -6,20 +6,21 @@ using namespace std;
 #define ss second
 #define show(x) cout << #x << ": " << x << "; "
 #define mod 1000000007
-#define maxN 200005
-
-ll arr[maxN];
 
 void solve(ll caseno)
 {
-    ll n, t, i;
-    
-    cin >>n >> t;
+    ll n, i, a, odd;
 
+    cin >> n;
+
+    odd = 0;
     for(i = 0; i < n; i++)
-        cin >> arr[i];
+    {
+        cin >> a;
+        odd += (a&1);
+    }    
 
-    
+    cout << min(odd, n-odd) << "\n";
 }
 
 int main()

@@ -1,0 +1,1 @@
+{"name":"Local: 1691D","url":"e:\\My Codes\\Codeforces\\1691D.cpp","tests":[{"id":1654014644269,"input":"3\n4\n-1 1 -1 2\n5\n-1 2 -3 2 -1\n3\n2 3 -1","output":"YES\nYES\nNO"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\My Codes\\Codeforces\\1691D.cpp","group":"local","local":true}

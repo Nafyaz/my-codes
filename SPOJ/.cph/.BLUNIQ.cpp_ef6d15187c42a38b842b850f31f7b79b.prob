@@ -1,0 +1,1 @@
+{"name":"Local: BLUNIQ","url":"e:\\My Codes\\SPOJ\\BLUNIQ.cpp","tests":[{"id":1654652118340,"input":"5\n1 42\n1 42\n1 43\n2 43\n1 42","output":"42\n43\n44\n43"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\My Codes\\SPOJ\\BLUNIQ.cpp","group":"local","local":true}

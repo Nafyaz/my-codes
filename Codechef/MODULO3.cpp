@@ -8,18 +8,18 @@ using namespace std;
 #define mod 1000000007
 #define maxN 200005
 
-ll arr[maxN];
-
 void solve(ll caseno)
 {
-    ll n, t, i;
-    
-    cin >>n >> t;
+    ll a, b;
 
-    for(i = 0; i < n; i++)
-        cin >> arr[i];
+    cin >> a >> b;
 
-    
+    if(a%3 == 0 || b%3 == 0)
+        cout << "0\n";
+    else if(a%3 == b%3)
+        cout << "1\n";
+    else
+        cout << "2\n";
 }
 
 int main()

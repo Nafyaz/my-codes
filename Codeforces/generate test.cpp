@@ -1,38 +1,36 @@
-#include <iostream>
-#include <cstdio>
-#include <cstdlib>
-#include <algorithm>
+#include<bits/stdc++.h>
 using namespace std;
+#define ll long long
+#define pll pair<ll, ll>
+#define ff first
+#define ss second
+#define show(x) cout << #x << ": " << x << "; "
+#define mod 1000000007
 
-const int N = 100100;
-int n;
-int p[N];
-int sz[N];
-int ans[N];
+void solve(ll caseno)
+{
+	ll n = 100000, q = 1;
+	cout << n << " " << q << "\n";
+
+	for(ll i = 0; i < n; i++)	
+		cout << rand()%2;
+	
+	cout << "\n1 " << n << "\n";
+}
 
 int main()
 {
-//	freopen("input.txt", "r", stdin);
-//	freopen("output.txt", "w", stdout);
+	ios_base::sync_with_stdio(0);
+	cin.tie(0);
 
-	scanf("%d", &n);
-	for (int i = 1; i < n; i++)
+	srand(time(0));
+
+	ll T = 1, caseno = 0;
+
+	// cout << T << "\n";
+
+	while(T--)
 	{
-		scanf("%d", &p[i]);
-		p[i]--;
+		solve(++caseno);
 	}
-	for (int i = 0; i < n; i++)
-		sz[i] = 1;
-	for (int i = n - 1; i > 0; i--)
-		sz[p[i]] += sz[i];
-	for (int i = n - 1; i > 0; i--)
-		ans[i] = sz[p[i]] + 1 - sz[i];
-	ans[0] = 2;
-	for (int i = 1; i < n; i++)
-		ans[i] += ans[p[i]];
-	for (int i = 0; i < n; i++)
-		printf("%.1lf ", (double)ans[i] / 2);
-	printf("\n");
-
-	return 0;
 }
