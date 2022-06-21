@@ -1,75 +1,35 @@
-#include<cstdio>
-#include<cstdlib>
-#include<cmath>
-#include<cstring>
-#include<string>
-#include<iostream>
-#include<algorithm>
-#include<vector>
-#include<stack>
-#include<deque>
-#include<queue>
-#include<map>
-#include<sstream>
+#include<bits/stdc++.h>
 using namespace std;
+#define ll long long
+#define pll pair<ll, ll>
+#define ff first
+#define ss second
+#define show(x) cout << #x << ": " << x << "; "
+#define mod 1000000007
+#define maxN 200005
 
-typedef long long int L;
-typedef unsigned long long int U;
+int carmichael[] = {561,1105,1729,2465,2821,6601,8911,10585,15841,
+				29341,41041,46657,52633,62745,63973,75361,101101,
+				115921,126217,162401,172081,188461,252601,278545,
+				294409,314821,334153,340561,399001,410041,449065,
+				488881,512461};
 
-char str[110][110];
-int  arrl[110][110];
-int  arru[110][110];
-char d[110][110];
-main()
+void solve(ll caseno)
 {
-	int tc;
-	cin>>tc;
-	while(tc--)
+	ll n;
+	cin >> n;
+
+	cout << (n^1000000) << "\n";
+}
+
+int main()
+{
+	ll T = 1, caseno = 0;
+
+	cin >> T;
+
+	while(T--)
 	{
-		int m,n;
-		scanf("%d %d", &n, &m);
-		for(int i = 0;i<n;i++)
-			scanf("%s", &str[i]);
-		arru[0][0] = (str[0][0] == '1');
-		arrl[0][0] = (str[0][0] == '1');
-		for(int i = 0;i<n;i++)
-		{
-			for(int j = 0;j<m;j++)
-			{
-				if(i > 0 && j > 0)
-				{
-					arru[i][j] = min(arru[i-1][j] + (str[i][j-1] == '1'), arrl[i-1][j]);
-					arrl[i][j] = min(arru[i][j-1], arrl[i][j-1] + (str[i-1][j] == '1'));
-				}
-				else if(i > 0)
-				{
-					arru[i][j] = min(arrl[i-1][j], arru[i-1][j]);
-					arrl[i][j] = 10007;
-				}
-				else if(j > 0)
-				{
-					arrl[i][j] = min(arrl[i][j-1], arru[i][j-1]);
-					arru[i][j] = 10007;
-				}
-				if(i < n-1)
-				{
-					arru[i][j] += (str[i+1][j] == '1');
-					arrl[i][j] += (str[i+1][j] == '1');
-				}
-				if(j < m-1)
-				{
-					arru[i][j] += (str[i][j+1] == '1');
-					arrl[i][j] += (str[i][j+1] == '1');
-				}
-			}
-		}
-		/*cout<<"********************************"<<endl;
-		for(int i = 0;i<n;i++)
-		{
-			for(int j = 0;j<m;j++)
-				printf("%d/%d ", arrl[i][j], arru[i][j]);
-			cout<<endl;
-		}*/
-		printf("%d\n", min(arru[n-1][m-1],arrl[n-1][m-1]));
+		solve(++caseno);
 	}
 }

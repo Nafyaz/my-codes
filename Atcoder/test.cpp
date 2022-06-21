@@ -1,51 +1,91 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
+#define ll long long
+#define pll pair<ll, ll>
+#define ff first
+#define ss second
+#define show(x) cout << #x << ": " << x << "; "
+// #define mod 1000000007
+#define maxN 200005
 
-const int N = 2e5 + 5;
-int a[N], l, r; 
-set <int> s, s2;
- 
-void solve() {
-    s.clear();
-    cin >> l >> r; 
-    for (int i = l; i <= r; ++i) {
-        cin >> a[i];
-        s.insert(a[i]);
-    }
+ll bigmod(ll a, ll b, ll mod)
+{
+    if(b == 0)
+        return 1%mod;
+    if(b == 1)
+        return a%mod;
 
-    int mul;
-    for (mul = 1; l % 2 == 0 && r % 2 == 1; l >>= 1, r >>= 1, mul <<= 1) {
-        s2.clear();
-        for (int i: s) 
-          s2.insert(i >> 1);
-        swap(s, s2);   
-    }
-
-    int ans;
-    if (l % 2 == 0) 
-      ans = r;
-    else 
-      ans = l;
-
-    for (int i: s) {
-        if (s.find(i ^ 1) == s.end()) {
-            int cur = i ^ ans;
-            bool f = true;
-            for (int j : s)
-                f &= ((cur ^ j) >= l && (cur ^ j) <= r);
-            if (f) {
-                ans = cur;
-                break;
-            }
-        }
-    }
-    cout << ans * mul << '\n';
+    ll res = bigmod(a, b>>1, mod);
+    res = (res*res)%mod;
+    if(b&1)
+        return (a*res)%mod;
+    return res;
 }
 
-int main() {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-    int t; cin >> t;
-    while (t--) solve();
-    return 0;
+bool isPrime2(ll n)
+{
+    vector<ll> checkerPrimes = {2, 3, 5, 7};
+    if(binary_search(checkerPrimes.begin(), checkerPrimes.end(), n) == 1)
+        return 1;
+
+    vector<ll> carmichael = {561,1105,1729,2465,2821,6601,8911,10585,15841,
+					29341,41041,46657,52633,62745,63973,75361,101101,
+					115921,126217,162401,172081,188461,252601,278545,
+					294409,314821,334153,340561,399001,410041,449065,
+					488881,512461};
+
+    if(binary_search(carmichael.begin(), carmichael.end(), n) == 1)
+        return 0;
+
+    for(auto cp : checkerPrimes)
+    {
+        if(bigmod(cp, n, n) != cp%n)
+            return 0;
+    }
+
+    return 1;
+}
+
+bool isPrime(ll n)
+{
+    ll i;
+    for(i = 2; i*i <= n; i++)
+    {
+        if(n%i == 0)
+            return 0;
+    }
+
+    return 1;
+}
+
+void solve(ll caseno)
+{
+    ll i;
+
+    // cout << isPrime(2) << " " << isPrime(3) << " " << isPrime(4) << " " << isPrime(5) << "\n";
+    // cout << isPrime2(2) << " " << isPrime2(3) << " " << isPrime2(4) << " " << isPrime2(5) << "\n";
+
+    for(i = 2; i <= 1000006; i++)
+    {
+        if(isPrime(i) != isPrime2(i))
+        {
+            cout << i;
+            break;
+        }
+    }
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+    ll T = 1, caseno = 0;
+
+    // cin >> T;
+
+    while(T--)
+    {
+        solve(++caseno);
+    }
 }

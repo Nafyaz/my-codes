@@ -8,13 +8,6 @@ using namespace std;
 #define mod 1000000007
 #define maxN 5003
 
-ll arr[maxN];
-
-ll getLCM(ll x, ll y)
-{
-    return x/__gcd(x, y)*y;
-}
-
 void solve(ll caseno)
 {
     ll n, i, j, lcm;
@@ -22,38 +15,17 @@ void solve(ll caseno)
 
     cin >> n;
 
-    for(i = 0; i+1 < n; i++)
-    {
-        if(i%2 == 1)
-            arr[i] = i+2;
-        else
-            arr[i] = getLCM(i+1, i+2);
-    }
+    for(i = n; i >= 4; i -= 4)    
+        cout << (i-3)*i << " " << (i-3)*(i-1) << " " << (i-2)*(i-1) << " " << (i-2)*i << " ";
+    
+    if(i == 3)
+        cout << "2 3 6";
+    else if(i == 2)
+        cout << "1 2";
+    else if(i == 1)
+        cout << "1";
 
-    lcm = 1;
-    for(i = 0; i+1 < n; i++)
-    {
-        flag = 0;
-        for(j = i+1; j+1 < n; j++)
-        {
-            if(__gcd(arr[i], arr[j]) == arr[i])
-            {
-                flag = 1;
-                break;
-            }
-        }
-
-        if(!flag)
-            lcm = lcm/__gcd(lcm, arr[i])*arr[i];
-    }
-
-    arr[n-1] = lcm;
-
-    cout << lcm << "\n";
-
-    // for(i = 0; i < n; i++)
-    //     cout << arr[i] << " ";
-    // cout << "\n";
+    cout << "\n";
 }
 
 int main()

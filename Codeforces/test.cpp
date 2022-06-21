@@ -1,41 +1,60 @@
-#include<bits/stdc++.h>
-#include <ext/pb_ds/assoc_container.hpp> // Common file
-#include <ext/pb_ds/tree_policy.hpp> // Including tree_order_statistics_node_update
-
+#include <bits/stdc++.h>
 using namespace std;
-using namespace __gnu_pbds;
 
-#define MAX 200005
-#define ll long long int
-#define pii pair<ll,int>
-ll a[MAX];
-ll c[MAX];
+typedef pair <bool, bool> bb;
 
-typedef tree<
-pii,
-null_type,
-less<pii>,
-rb_tree_tag,
-tree_order_statistics_node_update>
-ordered_set;
+const int Maxn = 200005;
 
-ordered_set OS1;
+int T;
+int n;
+vector <int> neigh[Maxn];
+int res;
 
-int main(){
-    int n; ll k;
-    scanf("%d %lld",&n,&k);
-
-    for(int i=1;i<=n;i++){
-        scanf("%lld",&a[i]);
-        c[i]=c[i-1]+a[i];
+bb Solve(int v, int p)
+{
+    int tk = 0;
+    int deg = 0;
+    bool wassafe = false;
+    bool waslin = false;
+    for (int i = 0; i < neigh[v].size(); i++) {
+        int u = neigh[v][i];
+        if (u == p) continue;
+        auto got = Solve(u, v);
+        tk += got.first;
+        deg++;
+        if (got.second && !got.first) wassafe = true;
+        if (got.second) waslin = true;
     }
-
-    ll Ans=0;
-    OS1.insert({0,0});
-    for(int i=1;i<=n;i++){
-        int pos=OS1.order_of_key({c[i]-k+1,0});
-        OS1.insert({c[i],i});
-        Ans+=i-pos;
+    if (wassafe) {
+        int add = max(0, deg - 1 - tk);
+        tk += add; res += add;
+    } else {
+        int add = max(0, deg - tk);
+        tk += add; res += add;
     }
-    cout<<Ans<<endl;
+    return bb(tk > 0, deg == 0 || deg == 1 && waslin);
+}
+
+int main()
+{
+    scanf("%d", &T);
+    while (T--) {
+        scanf("%d", &n);
+        for (int i = 1; i <= n; i++)
+            neigh[i].clear();
+        for (int i = 0; i < n - 1; i++) {
+            int a, b; scanf("%d %d", &a, &b);
+            neigh[a].push_back(b);
+            neigh[b].push_back(a);
+        }
+        if (n == 1) { printf("0\n"); continue; }
+        res = 0;
+        int root = 1;
+        while (root <= n && neigh[root].size() <= 2)
+            root++;
+        if (root > n) { printf("1\n"); continue; }
+        Solve(root, 0);
+        printf("%d\n", res);
+    }
+    return 0;
 }

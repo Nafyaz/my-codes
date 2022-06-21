@@ -14,7 +14,7 @@
 	// }
 
 	"Starting CPP": {
-		"prefix": "#i",
+		"prefix": "#ii",
 		"body": [
 			"#include<bits/stdc++.h>",
 			"using namespace std;",
@@ -23,6 +23,8 @@
 			"#define ff first",
 			"#define ss second",
 			"#define show(x) cout << #x << \": \" << x << \"; \"",
+			"#define MOD 1000000007",
+			"#define MAXN 2000006",
 			"",
 			"void solve(ll caseno)",
 			"{",
