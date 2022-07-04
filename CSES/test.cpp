@@ -8,51 +8,52 @@ using namespace std;
 #define MOD 1000000007
 #define MAXN 2000006
 
-ll fact[MAXN];
+ll n, BIT[MAXN];
 
-ll getFact(ll x)
+void Update(ll i, ll d)
 {
-    if(fact[x] != 0)
-        return fact[x];
-    if(x <= 1)
-        return fact[x] = 1;
+    while(i <= n)
+    {
+        BIT[i] += d;
+        i += i & (-i);
+    }
+}
+
+ll Query(ll i)
+{
+    ll sum = 0;
+    while(i > 0)
+    {
+        sum += BIT[i];
+        i -= i & (-i);
+    }
     
-    return fact[x] = (getFact(x-1) * x) % MOD;
-}
-
-ll bigmod(ll a, ll b, ll mod)
-{
-    if(b == 0)
-        return 1%mod;
-    if(b == 1)
-        return a%mod;
-
-    ll res = bigmod(a, b>>1, mod);
-    res = (res*res)%mod;
-    if(b&1)
-        return (a*res)%mod;
-    return res;
-}
-
-ll invmod(ll a, ll m)
-{
-    return bigmod(a, m-2, m);
+    return sum;
 }
 
 void solve(ll caseno)
 {
-    ll n, m;
+    ll idx, add, i;
 
-    cin >> n >> m;
+    n = 20;
 
-    // cout << (((getFact(n+m-1) * invmod(getFact(n-1), MOD)) % MOD) * invmod(getFact(m), MOD)) % MOD << "\n";
-	cout << getFact(n+m-1) << "\n";
+    while(1)
+    {
+        cin >> idx >> add;
+        Update(idx, add);
+        for(i = 0; i <= n; i++)
+            cout << setw(3) << i;
+        cout << "\n";
+        for(i = 0; i <= n; i++)
+            cout << setw(3) << BIT[i];
+        cout << "\n";
+    }
 }
 
 int main()
 {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
+    // ios_base::sync_with_stdio(0);
+    // cin.tie(0);
 
     ll T = 1, caseno = 0;
 

@@ -1,60 +1,82 @@
-#include <bits/stdc++.h>
+#include<bits/stdc++.h>
 using namespace std;
 
-typedef pair <bool, bool> bb;
+#define FRE(i,a,b)  for(i = a; i <= b; i++)
+#define FRL(i,a,b)  for(i = a; i < b; i++)
+#define mem(t, v)   memset ((t) , v, sizeof(t))
+#define all(x)      x.begin(),x.end()
+#define un(x)       x.erase(unique(all(x)), x.end())
+#define sf(n)       scanf("%d", &n)
+#define sff(a,b)    scanf("%d %d", &a, &b)
+#define sfff(a,b,c) scanf("%d %d %d", &a, &b, &c)
+#define D(x)        cout<<#x " = "<<(x)<<endl
+#define DBG         pf("Hi\n")
+#define pf          printf
+#define pii         pair <int, int>
+#define pll         pair <LL, LL>
+#define pb          push_back
+#define PI          acos(-1.00)
+#define sz          size()
+#define xx          first
+#define yy          second
+#define eps         1e-9
 
-const int Maxn = 200005;
+typedef long long int LL;
+typedef double db;
 
-int T;
-int n;
-vector <int> neigh[Maxn];
-int res;
+/* Min Priority queue
+   priority_queue<int, vector<int>, greater <int> > q;
+*/
 
-bb Solve(int v, int p)
+//int dx[] = {+0,+1,+0,-1};
+//int dy[] = {+1,+0,-1,+0};
+//int dx[] = {-1,-1,-1,+0,+0,+1,+1,+1};
+//int dy[] = {-1,+0,+1,-1,+1,-1,+0,+1};
+//bool check(int n, int pos) {return (bool) (n & (1<<pos));}
+//int on(int n, int pos) {return n | (1<<pos); }
+//int off(int n, int pos) {return n & ~(1<<pos); }
+#define MAX     100000
+vector<int> E[MAX+10], V;
+bool vis[MAX+10], adj[MAX+10];
+
+void dfs(int nd)
 {
-    int tk = 0;
-    int deg = 0;
-    bool wassafe = false;
-    bool waslin = false;
-    for (int i = 0; i < neigh[v].size(); i++) {
-        int u = neigh[v][i];
-        if (u == p) continue;
-        auto got = Solve(u, v);
-        tk += got.first;
-        deg++;
-        if (got.second && !got.first) wassafe = true;
-        if (got.second) waslin = true;
+    vis[nd] = 1;
+    V.pb(nd);
+    for(int i = 0; i<E[nd].sz; i++)
+    {
+        if(!vis[E[nd][i]])
+            return dfs(E[nd][i]);
     }
-    if (wassafe) {
-        int add = max(0, deg - 1 - tk);
-        tk += add; res += add;
-    } else {
-        int add = max(0, deg - tk);
-        tk += add; res += add;
-    }
-    return bb(tk > 0, deg == 0 || deg == 1 && waslin);
+    for(int i = 0; i<E[nd].sz; i++)
+            adj[E[nd][i]] = 1;
 }
 
 int main()
 {
-    scanf("%d", &T);
-    while (T--) {
-        scanf("%d", &n);
-        for (int i = 1; i <= n; i++)
-            neigh[i].clear();
-        for (int i = 0; i < n - 1; i++) {
-            int a, b; scanf("%d %d", &a, &b);
-            neigh[a].push_back(b);
-            neigh[b].push_back(a);
+    //freopen("in.txt", "r", stdin);
+    //freopen("out.txt", "w", stdout);
+
+    int i, j, k, cs, t, n, m;
+    sfff(n,m,k);
+    FRE(i,1,m)
+    {
+        sff(j,k);
+        E[j].pb(k);
+        E[k].pb(j);
+    }
+    dfs(1);
+    for(i = 0; ; i++)
+    {
+        if(adj[V[i]] == 1)
+        {
+            pf("%d\n",V.sz - i);
+            pf("%d",V[i]);
+            for(i++; i<V.sz; i++)
+                pf(" %d",V[i]);
+            break;
         }
-        if (n == 1) { printf("0\n"); continue; }
-        res = 0;
-        int root = 1;
-        while (root <= n && neigh[root].size() <= 2)
-            root++;
-        if (root > n) { printf("1\n"); continue; }
-        Solve(root, 0);
-        printf("%d\n", res);
     }
     return 0;
 }
+

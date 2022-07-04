@@ -8,16 +8,44 @@ using namespace std;
 #define MOD 1000000007
 #define MAXN 200005
 
+ll n;
 ll k[MAXN];
+
+ll getLNIS()
+{
+    ll i, pos;
+
+    vector<ll> dp;
+
+    for(i = 0; i < n; i++)
+    {
+        pos = upper_bound(dp.begin(), dp.end(), k[i]) - dp.begin();
+
+        // show(i);
+        // show(k[i]);
+        // show(pos);
+        // show(dp.size());
+        // cout << "\n";
+
+        if(pos == dp.size())
+            dp.push_back(k[i]);
+        else
+            dp[pos] = k[i];    
+    }
+
+    return dp.size();
+}
 
 void solve(ll caseno)
 {
-    ll n, i;
+    ll i;
 
     cin >> n;
 
     for(i = 0; i < n; i++)
         cin >> k[i];
+
+    cout << getLNIS() << "\n";
 }
 
 int main()
