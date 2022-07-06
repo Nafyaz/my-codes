@@ -18,6 +18,7 @@
 		"body": [
 			"#include<bits/stdc++.h>",
 			"using namespace std;",
+			"#define pii pair<int, int>",
 			"#define ll long long",
 			"#define pll pair<ll, ll>",
 			"#define ff first",

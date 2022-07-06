@@ -1,40 +1,55 @@
-#include<bits/stdc++.h>
+#include <iostream>
+#include <assert.h>
+#include <vector>
 using namespace std;
-
-map <string,string> m;
+vector<int> v[200005],ans;
+int deg[200005];
+bool del[200005];
+void add(int node,int p)
+{
+	assert(deg[node]%2==0);
+	del[node]=1;
+	ans.push_back(node);
+	for (int u:v[node])
+	deg[u]--;
+	for (int u:v[node])
+	{
+		if (u!=p && !del[u])
+		add(u,node);
+	}
+}
+void dfs(int node,int p)
+{
+	for (int u:v[node])
+	{
+		if (u!=p)
+		dfs(u,node);
+	}
+	if (deg[node]%2==0)
+	add(node,p);
+}
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
-
-    char st1[15],st2[15],str[15];
-    string st;
-
-    while(gets(str)&&str[0]!='\0')
-    {
-        cout << str << " lol\n";
-        sscanf(str,"%s%s",st1,st2);
-        m[st2]=st1;
-    }
-
-
-    while( cin>>st)
-    {
-        if(m[st].size())
-            cout<<m[st]<<endl;
-        else
-            cout<<"eh"<<endl;
-    }
-    return 0;
+	int n;
+	scanf("%d",&n);
+	for (int i=1;i<=n;i++)
+	{
+		int a;
+		scanf("%d",&a);
+		if (!a)
+		continue;
+		deg[i]++;
+		deg[a]++;
+		v[a].push_back(i);
+		v[i].push_back(a);
+	}
+	dfs(1,0);
+	if (ans.size()==n)
+	{
+		printf("YES\n");
+		for (int i:ans)
+		printf("%d\n",i);
+	}
+	else
+	printf("NO");
 }
-/*
-dog ogday
-cat atcay
-pig igpay
-froot ootfray
-loops oopslay
-
-atcay
-ittenkay
-oopslay
-*/
