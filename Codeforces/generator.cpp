@@ -28,9 +28,9 @@ int main()
 
 	srand(time(0));
 
-	ll T = 1000, caseno = 0;
+	ll T = 1, caseno = 0;
 
-	cout << T << "\n";
+	// cout << T << "\n";
 
 	while(T--)
 	{

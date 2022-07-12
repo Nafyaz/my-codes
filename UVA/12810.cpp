@@ -6,15 +6,29 @@ using namespace std;
 #define ff first
 #define ss second
 #define show(x) cout << #x << ": " << x << "; "
-#define MOD 1000000007
-#define MAXN 2000006
+#define MOD 1000000009
+#define MAXN 100005
 
 void solve(int caseno)
 {
-    vector<ll> x{1, 2, 3};
+    ll n, i, x, ans = 1;
 
-    for(auto u : x)
-        cout << u << " ";
+    cin >> n; 
+
+    for(i = 0; i < n; i++)
+    {
+        cin >> x;
+        ans = (ans * (1 + 2*x)) % MOD;
+    }
+
+    ans--;
+
+    if(ans%2)
+        ans = ((ans + MOD)/2) % MOD;
+    else
+        ans = ans / 2;
+
+    cout << ans << "\n";
 }
 
 int main()
@@ -24,7 +38,7 @@ int main()
 
     int T = 1, caseno = 0;
 
-    // cin >> T;
+    cin >> T;
 
     while(T--)
     {

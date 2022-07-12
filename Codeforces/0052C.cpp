@@ -16,8 +16,8 @@ void Build(ll node, ll bg, ll ed)
 {
     if(bg == ed)
     {
-        Tree[node] = arr[bg];
         Lazy[node] = 0;
+        Tree[node] = arr[bg];
         return;
     }
 
@@ -35,17 +35,6 @@ void Build(ll node, ll bg, ll ed)
 
 void Update(ll node, ll bg, ll ed, ll l, ll r, ll v)
 {
-    // show(node);
-    // show(bg);
-    // show(ed);
-    // show(l);
-    // show(r);
-    // show(v);
-    // cout << "\n";
-    
-    if(bg > r || ed < l)
-        return;
-
     ll leftNode = 2*node + 1, rightNode = 2*node + 2;
     ll mid = (bg + ed) / 2;
 
@@ -63,6 +52,9 @@ void Update(ll node, ll bg, ll ed, ll l, ll r, ll v)
 
         Lazy[node] = 0;
     }
+
+    if(bg > r || ed < l)
+        return;
 
     if(l <= bg && ed <= r)
     {
@@ -87,9 +79,6 @@ void Update(ll node, ll bg, ll ed, ll l, ll r, ll v)
 
 ll Query(ll node, ll bg, ll ed, ll l, ll r)
 {
-    if(bg > r || ed < l)
-        return LLONG_MAX;
-
     ll leftNode = 2*node + 1, rightNode = 2*node + 2;
     ll mid = (bg + ed) / 2;
 
@@ -107,6 +96,9 @@ ll Query(ll node, ll bg, ll ed, ll l, ll r)
 
         Lazy[node] = 0;
     }
+
+    if(bg > r || ed < l)
+        return LLONG_MAX;
 
     if(l <= bg && ed <= r)
         return Tree[node];
@@ -126,17 +118,6 @@ void solve(ll caseno)
 
     Build(0, 0, n-1);
 
-    // Update(0, 0, n-1, 3, n-1, -1);
-    // Update(0, 0, n-1, 0, 0, -1);
-
-    // for(i = 0; i <= 7; i++)
-    // {
-    //     show(i);
-    //     show(Tree[i]);
-    //     show(Lazy[i]);
-    //     cout << "\n";
-    // }
-
     cin >> m;
     getline(cin, s);
 
@@ -150,10 +131,6 @@ void solve(ll caseno)
         while(ss >> x)
             temp.push_back(x);
 
-        // cout << "\ntemp:" << temp.size() << "\n";
-        // for(auto u : temp)
-        //     cout << u << " ";
-        // cout << "\n\n";
 
         if(temp.size() == 3)
         {
@@ -184,8 +161,8 @@ void solve(ll caseno)
 
 int main()
 {
-    // ios_base::sync_with_stdio(0);
-    // cin.tie(0);
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
 
     int T = 1, caseno = 0;
 
