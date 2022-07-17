@@ -1,198 +1,67 @@
-#include<bits/stdc++.h>
-using namespace std;
-#define pii pair<int, int>
-#define ll long long
-#define pll pair<ll, ll>
-#define ff first
-#define ss second
-#define show(x) cout << #x << ": " << x << "; "
-#define MOD 1000000007
-#define MAXN 200005
-
-ll arr[MAXN];
-ll Tree[4*MAXN], Lazy[4*MAXN];
-
-void Build(ll node, ll bg, ll ed)
+#include <bits/stdc++.h>
+ 
+using i64 = long long;
+ 
+constexpr int N = 2E5 + 100;
+ 
+int main() 
 {
-    if(bg == ed)
-    {
-        Tree[node] = arr[bg];
-        Lazy[node] = 0;
-        return;
-    }
-
-    ll leftNode = 2*node + 1, rightNode = 2*node + 2;
-    ll mid = (bg + ed) / 2;
-
-    Build(leftNode, bg, mid);
-    Build(rightNode, mid + 1, ed);
-
-    Tree[node] = min(Tree[leftNode], Tree[rightNode]);
-    Lazy[node] = 0;
-
-    return;
-}
-
-void Update(ll node, ll bg, ll ed, ll l, ll r, ll v)
-{
-    // show(node);
-    // show(bg);
-    // show(ed);
-    // show(l);
-    // show(r);
-    // show(v);
-    // cout << "\n";
+    std::ios::sync_with_stdio(false);
+    std::cin.tie(nullptr);
     
-    if(bg > r || ed < l)
-        return;
-
-    ll leftNode = 2*node + 1, rightNode = 2*node + 2;
-    ll mid = (bg + ed) / 2;
-
-    if(Lazy[node] != 0)
-    {
-        Tree[node] += Lazy[node];
-
-        if(bg != ed)
-        {
-            Lazy[leftNode] += Lazy[node];
-            Lazy[rightNode] += Lazy[node];
+    int n, q;
+    std::cin >> n >> q;
+    
+    std::vector<int> a(n);
+    for (int i = 0; i < n; i++)     
+        std::cin >> a[i];
+    
+    std::vector<int> c(N);
+    std::set<int> z{-1}, o{-1}, no{-1};
+    for (int i = 0; i < N; i++) 
+        z.insert(i);
+    
+    std::function<void(int, int)> add = [&](int x, int t) {
+        z.erase(x);
+        o.erase(x);
+        no.erase(x);
+        c[x] += t;
+        if (c[x] == -2) {
+            c[x] = 0;
+            add(x + 1, -1);
+        } else if (c[x] == 2) {
+            c[x] = 0;
+            add(x + 1, 1);
         }
-        else
-            arr[bg] += Lazy[node];
-
-        Lazy[node] = 0;
-    }
-
-    if(l <= bg && ed <= r)
-    {
-        Tree[node] += v;
-
-        if(bg != ed)
-        {
-            Lazy[leftNode] += v;
-            Lazy[rightNode] += v;
+        if (c[x] == 0) {
+            z.insert(x);
+        } else if (c[x] == 1) {
+            o.insert(x);
+        } else {
+            no.insert(x);
         }
-        else
-            arr[bg] += v;
-
-        return;
+    };
+    
+    for (int i = 0; i < n; i++) {
+        add(a[i], 1);
     }
-
-    Update(leftNode, bg, mid, l, r, v);
-    Update(rightNode, mid+1, ed, l, r, v);
-
-    Tree[node] = min(Tree[leftNode], Tree[rightNode]);
-}
-
-ll Query(ll node, ll bg, ll ed, ll l, ll r)
-{
-    if(bg > r || ed < l)
-        return LLONG_MAX;
-
-    ll leftNode = 2*node + 1, rightNode = 2*node + 2;
-    ll mid = (bg + ed) / 2;
-
-    if(Lazy[node] != 0)
-    {
-        Tree[node] += Lazy[node];
-
-        if(bg != ed)
-        {
-            Lazy[leftNode] += Lazy[node];
-            Lazy[rightNode] += Lazy[node];
+    
+    for (int i = 0; i < q; i++) {
+        int x, v;
+        std::cin >> x >> v;
+        x--;
+        add(a[x], -1);
+        add(a[x] = v, 1);
+        
+        int m = *o.rbegin();
+        m = std::max(*std::next(o.rbegin()), *std::prev(z.lower_bound(m))) + 1;
+        
+        if (*std::prev(o.lower_bound(m)) < *std::prev(no.lower_bound(m))) {
+            m--;
         }
-        else
-            arr[bg] += Lazy[node];
-
-        Lazy[node] = 0;
+        
+        std::cout << m << "\n";
     }
-
-    if(l <= bg && ed <= r)
-        return Tree[node];
-
-    return min(Query(leftNode, bg, mid, l, r), Query(rightNode, mid+1, ed, l, r));
-}
-
-void solve(ll caseno)
-{
-    ll n, m, i, x, bg, ed, v;
-    string s;
-
-    cin >> n;
-
-    for(i = 0; i < n; i++)
-        cin >> arr[i];
-
-    Build(0, 0, n-1);
-
-    // Update(0, 0, n-1, 3, n-1, -1);
-    // Update(0, 0, n-1, 0, 0, -1);
-
-    // for(i = 0; i <= 7; i++)
-    // {
-    //     show(i);
-    //     show(Tree[i]);
-    //     show(Lazy[i]);
-    //     cout << "\n";
-    // }
-
-    cin >> m;
-    getline(cin, s);
-
-    while(m--)
-    {
-        getline(cin, s);
-
-        stringstream ss(s);
-
-        vector<ll> temp;
-        while(ss >> x)
-            temp.push_back(x);
-
-        // cout << "\ntemp:" << temp.size() << "\n";
-        // for(auto u : temp)
-        //     cout << u << " ";
-        // cout << "\n\n";
-
-        if(temp.size() == 3)
-        {
-            bg = temp[0];
-            ed = temp[1];
-            v = temp[2];
-
-            if(bg > ed)
-            {
-                Update(0, 0, n-1, bg, n-1, v);
-                Update(0, 0, n-1, 0, ed, v);
-            }
-            else
-                Update(0, 0, n-1, bg, ed, v);
-        }
-        else
-        {
-            bg = temp[0];
-            ed = temp[1];
-
-            if(bg > ed)            
-                cout << min(Query(0, 0, n-1, bg, n-1), Query(0, 0, n-1, 0, ed)) << "\n";
-            else
-                cout << Query(0, 0, n-1, bg, ed) << "\n";
-        }
-    }
-}
-
-int main()
-{
-    // ios_base::sync_with_stdio(0);
-    // cin.tie(0);
-
-    int T = 1, caseno = 0;
-
-    // cin >> T;
-
-    while(T--)
-    {
-        solve(++caseno);
-    }
+    
+    return 0;
 }

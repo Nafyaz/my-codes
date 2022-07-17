@@ -1,38 +1,68 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-#define ll long long
-#define pll pair<ll, ll>
-#define ff first
-#define ss second
-#define show(x) cout << #x << ": " << x << "; "
-#define mod 1000000007
-#define maxN 200005
 
-ll arr[maxN];
-
-void solve(ll caseno)
-{
-    ll n, t, i;
-    
-    cin >>n >> t;
-
-    for(i = 0; i < n; i++)
-        cin >> arr[i];
-
-    
-}
+char field[128][128];
 
 int main()
 {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
+	int t;
+	cin >> t;
+	while (t--)
+	{
+		int n, m, kh;
+		cin >> n >> m >> kh;
+		int kv = n * m / 2 - kh;
+		if (n & 1)
+		{
+			kh -= m / 2;
+			if (kh < 0)
+			{
+				cout << "NO\n";
+				continue;
+			}
 
-    ll T = 1, caseno = 0;
+			for (int i = 0; i < m / 2; i++)
+				field[n - 1][i * 2] = field[n - 1][i * 2 + 1] = ((i & 1) ? 'x' : 'y');
+		}
+		else if (m & 1)
+		{
+			kv -= n / 2;
+			if (kv < 0)
+			{
+				cout << "NO\n";
+				continue;
+			}
 
-    cin >> T;
+			for (int i = 0; i < n / 2; i++)
+				field[i * 2][m - 1] = field[i * 2 + 1][m - 1] = ((i & 1) ? 'x' : 'y');
+		}
+		if ((kh & 1) || (kv & 1))
+		{
+			cout << "NO\n";
+			continue;
+		}
+		for(int i = 0; i < n / 2; i++)
+			for (int j = 0; j < m / 2; j++)
+			{
+				if (kh)
+				{
+					kh -= 2;
+					field[2 * i][2 * j] = field[2 * i][2 * j + 1] = (((i + j) & 1) ? 'a' : 'b');
+					field[2 * i + 1][2 * j] = field[2 * i + 1][2 * j + 1] = (((i + j) & 1) ? 'c' : 'd');
+				}
+				else
+				{
+					field[2 * i][2 * j] = field[2 * i + 1][2 * j] = (((i + j) & 1) ? 'a' : 'b');
+					field[2 * i][2 * j + 1] = field[2 * i + 1][2 * j + 1] = (((i + j) & 1) ? 'c' : 'd');
+				}
+			}
 
-    while(T--)
-    {
-        solve(++caseno);
-    }
+		cout << "YES\n";
+		for (int i = 0; i < n; i++)
+		{
+			field[i][m] = 0;
+			cout << field[i] << '\n';
+		}
+	}
+	return 0;
 }
