@@ -13,7 +13,7 @@ using namespace std;
 #define MAXN 200025
 
 bitset<MAXN> bs, temp, zero;
-ll arr[MAXN];
+int arr[MAXN];
 
 bitset<MAXN> Add(bitset<MAXN> a, bitset<MAXN> b)
 {

@@ -15,23 +15,6 @@ vector<int> L[MAXN], R[MAXN];
 
 int ans[MAXN];
 
-void Build(int node, int bg, int ed)
-{
-    if(bg == ed)
-    {
-        Tree[node] = arr[bg];
-        return;
-    }
-
-    int leftNode = 2*node, rightNode = 2*node + 1;
-    int mid = (bg + ed)/2;
-
-    Build(leftNode, bg, mid);
-    Build(rightNode, mid+1, ed);
-
-    Tree[node] = min(Tree[leftNode], Tree[rightNode]);
-}
-
 void Update(int node, int bg, int ed, int idx, int val)
 {
     if(bg == ed)
