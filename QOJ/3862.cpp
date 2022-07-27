@@ -7,11 +7,22 @@ using namespace std;
 #define ss second
 #define show(x) cout << #x << ": " << x << "; "
 #define MOD 1000000007
-#define MAXN 2000006
+#define MAXN 200005
+
+ll p[MAXN], x[MAXN];
+pll boundary[MAXN];
 
 void solve(int caseno)
 {
-    cout << __gcd(0, 5);
+    ll n, m, i;
+
+    cin >> n >> m;
+
+    for(i = 1; i <= n; i++)
+        cin >> p[i];
+    for(i = 1; i <= n; i++)
+        cin >> x[i];
+    sort(x+1, x+n+1);
 }
 
 int main()

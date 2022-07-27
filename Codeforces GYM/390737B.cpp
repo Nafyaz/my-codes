@@ -11,7 +11,17 @@ using namespace std;
 
 void solve(int caseno)
 {
-    cout << __gcd(0, 5);
+    int n, ans = 0, a;
+
+    cin >> n;
+
+    while(n--)
+    {
+        cin >> a;
+        ans |= a;
+    }
+
+    cout << ans << "\n";
 }
 
 int main()
@@ -21,7 +31,7 @@ int main()
 
     int T = 1, caseno = 0;
 
-    // cin >> T;
+    cin >> T;
 
     while(T--)
     {

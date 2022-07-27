@@ -11,7 +11,19 @@ using namespace std;
 
 void solve(int caseno)
 {
-    cout << __gcd(0, 5);
+    int i, cntA, cntB;
+    string s;
+
+    cin >> s;
+
+    cntA = cntB = 0;
+    for(i = 0; i < s.size(); i++)
+    {
+        cntA += (s[i] == 'a');
+        cntB += (s[i] == 'b');
+    }
+
+    cout << ((cntA == cntB)? "YES\n" : "NO\n");
 }
 
 int main()
@@ -21,7 +33,7 @@ int main()
 
     int T = 1, caseno = 0;
 
-    // cin >> T;
+    cin >> T;
 
     while(T--)
     {

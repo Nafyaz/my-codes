@@ -11,7 +11,29 @@ using namespace std;
 
 void solve(int caseno)
 {
-    cout << __gcd(0, 5);
+    int i;
+    string s;
+    char c;
+    bool isBig = 0;
+
+    cin >> s;
+    c = s[0];
+
+    for(i = 0; i+1 < s.size(); i++)
+    {
+        if(s[i] > s[i+1])
+        {
+            isBig = 1;
+            break;
+        }
+        else if(s[i] < s[i+1])
+            break;
+    }
+
+    if(isBig || i+1 == s.size())
+        cout << string(s.size(), c) << "\n";
+    else
+        cout << string(s.size(), c+1) << "\n";
 }
 
 int main()

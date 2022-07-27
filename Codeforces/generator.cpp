@@ -9,16 +9,14 @@ using namespace std;
 
 void solve(ll caseno)
 {
-	ll n = rand()%10+1, m = rand()%10+1;
+	ll n = rand()%5 + 3, m = rand()%5 + 3, k = rand()%5 + 1;
 
-	cout << n << " " << m << "\n";
-
-	for(ll i = 0; i < n; i++)
+	cout << n << " " << m << " " << k << "\n";
+	while(k--)
 	{
-		for(ll j = 0; j < m; j++)		
-			cout << (rand()%7 == 0? "B" : "W");
-		cout << "\n";
+		cout << rand()%25 + 1<< " ";
 	}
+	cout << "\n";
 }
 
 int main()
@@ -28,9 +26,9 @@ int main()
 
 	srand(time(0));
 
-	ll T = 1, caseno = 0;
+	ll T = 1000, caseno = 0;
 
-	// cout << T << "\n";
+	cout << T << "\n";
 
 	while(T--)
 	{

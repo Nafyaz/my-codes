@@ -9,42 +9,62 @@ using namespace std;
 #define MOD 1000000007
 #define MAXN 2000006
 
+ll getSum(ll n, ll a)
+{
+    ll bit, ret = 0, aSum = 0;
+
+    for(bit = (1LL << 32); bit > 0; bit /= 2)
+    {
+        if(n == 1)
+        {
+            ret += aSum;
+            n--;
+        }
+        else if(n > 1 && (a & bit))
+        {
+            ret += aSum;
+            ret += bit-1;
+
+            aSum += bit;
+            n--;
+        }
+    }
+
+    if(n == 1)
+        ret += aSum;
+    else
+        ret += n*a;
+
+    return ret;
+}
+
 void solve(int caseno)
 {
      ll n, s, low, high, mid, ans, sum, last;
 
      cin >> n >> s;
 
-//     mid = 3;
-//     last = ((1LL << (64 - __builtin_clzll(mid))) - 1) ^ mid;
-
-//     show(mid);
-//     show(last);
-//     cout << "\n";
-//     return;
+    //  cout << getSum(2, 5) << "\n";
 
      low = 0;
      high = s;
      while(low <= high)
      {
-         mid = (low + high) / 2;
+        mid = (low + high) / 2;
+        
+        // show(low);
+        // show(high);
+        // show(mid);
+        // cout << "\n";
 
-         last = ((1LL << (64 - __builtin_clzll(mid))) - 1) ^ mid;
-         sum = (n-1)*mid + last;
+        sum = getSum(n, mid);
 
-//         show(low);
-//         show(high);
-//         show(mid);
-//         show(last);
-//         show(sum);
-//         cout << "\n";
-
-         if(sum >= s)
-         {
-             ans = mid;
-             high = mid - 1;
-         }
-         else
+        if(sum >= s)
+        {
+            ans = mid;
+            high = mid - 1;
+        }
+        else
             low = mid + 1;
      }
 
@@ -67,5 +87,5 @@ int main()
 }
 /*
 1
-2 7
+2 136
 */

@@ -11,7 +11,24 @@ using namespace std;
 
 void solve(int caseno)
 {
-    cout << __gcd(0, 5);
+    int n, m, a, b, diff, ansA, ansB;
+
+    cin >> n >> m;
+
+    diff = -1;
+    for(a = n; a <= 2*n && a <= m; a++)
+    {
+        b = m/a*a;
+
+        if(b - a > diff)
+        {
+            diff = b - a;
+            ansA = a;
+            ansB = b;
+        }
+    }
+
+    cout << ansA << " " << ansB << "\n";
 }
 
 int main()
@@ -21,7 +38,7 @@ int main()
 
     int T = 1, caseno = 0;
 
-    // cin >> T;
+    cin >> T;
 
     while(T--)
     {
