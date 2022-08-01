@@ -1,1 +1,0 @@
-{"name":"Local: 1673A","url":"/media/casio991ms/E/My codes/Codeforces/1673A.cpp","tests":[{"id":1651330052460,"input":"5\naba\nabc\ncba\nn\ncodeforces","output":"Alice 2\nAlice 4\nAlice 4\nBob 14\nAlice 93"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"/media/casio991ms/E/My codes/Codeforces/1673A.cpp","group":"local","local":true}

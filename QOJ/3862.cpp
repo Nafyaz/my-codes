@@ -10,19 +10,53 @@ using namespace std;
 #define MAXN 200005
 
 ll p[MAXN], x[MAXN];
-pll boundary[MAXN];
+ll pref[MAXN];
 
 void solve(int caseno)
 {
-    ll n, m, i;
+    ll n, m, i, j, ans, l, r, pos, dist;
 
     cin >> n >> m;
 
     for(i = 1; i <= n; i++)
+    {
         cin >> p[i];
-    for(i = 1; i <= n; i++)
+        pref[i] = pref[i-1] + p[i];
+    }
+    for(i = 1; i <= m; i++)
+    {
         cin >> x[i];
-    sort(x+1, x+n+1);
+    }
+
+    sort(x+1, x+m+1);
+
+    if(x[1] > 0)
+        ans = pref[min(n, (x[1]-1)/100 + 1)];
+    else
+        ans = 0;
+    
+    for(i = 1; i < m; i++)
+    {
+        dist = x[i+1] - x[i];
+
+        l = x[i]/100 + 2;
+        r = (x[i+1] - 1)/100 + 1;
+
+        for(j = l; j <= r && j <= n; j++)
+        {
+            if(dist&1)
+                pos = min({n, r, (100*(j-1) + dist/2)/100 + 1});
+            else
+                pos = min({n, r, (100*(j-1) + dist/2 -1)/100 + 1});
+                
+            ans = max(ans, pref[pos] - pref[j-1]);
+        }
+    }
+
+    if(100*(n-1) > x[m])
+        ans = max(ans, pref[n] - pref[x[m]/100+1]);
+
+    cout << ans << "\n";
 }
 
 int main()
@@ -39,3 +73,9 @@ int main()
         solve(++caseno);
     }
 }
+
+/*
+2 2
+10 20
+0 100
+*/

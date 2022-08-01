@@ -9,22 +9,9 @@ using namespace std;
 #define MOD 1000000007
 #define MAXN 2000006
 
-bool vis[50][600];
-string dp[50][600];
-string mn[50];
-
-string getMin(int rem, int mask)
-{
-    if(vis[])
-}
-
 void solve(int caseno)
 {
-    int i;
-
-    memset(vis, 0, sizeof vis);
-    for(i = 1; i <= 45; i++)
-        mn = getMin(i, 0);
+    
 }
 
 int main()
@@ -34,7 +21,7 @@ int main()
 
     int T = 1, caseno = 0;
 
-    // cin >> T;
+    cin >> T;
 
     while(T--)
     {
