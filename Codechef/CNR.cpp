@@ -1,116 +1,135 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define ll long long
-#define show(x) cout << #x << ": " << x << "; "
-#define pll pair<ll, ll>
 #define pii pair<int, int>
+#define ll long long
+#define pll pair<ll, ll>
 #define ff first
 #define ss second
+#define show(x) cout << #x << ": " << x << "; "
 #define MOD 1000000007
 #define MAXN 2000006
 
-int nCr[360][360] = {-1};
+const int sz = 111;
+int nCr[355][355][sz];
+int m[sz];
 
-int getnCr(int n, int r)
+bool isGE(int a[], int b[])     // a >= b ?
 {
-    if(nCr[n][r] != -1)
-        return nCr[n][r];
+    int i;
 
-    if(r > n)
-        return nCr[n][r] = 0;
-
-    if(2*r > n)
-        return nCr[n][r] = getnCr(n, r-1);
-
-    if(r == 0)
-        return nCr[n][r] = 1;
-
-    return nCr[n][r] = getnCr(n-1, r-1) + getnCr(n-1, r);
-}
-
-pii call(int n, int k, int m)
-{
-    int pos;
-
-    for(pos = n-k; pos >= 0; pos--)
+    for(i = sz-1; i >= 0; i--)
     {
-        if(getnCr(n-1-pos, k-1) <= m)
-        {
-            m -= getnCr(n-1-pos, k-1);
-            if(m == 0)
-                return {pos, m};
-        }
-        else
-            return {pos, m};
+        if(a[i] > b[i])
+            return 1;
+        if(a[i] < b[i])
+            return 0;
     }
 
-    return {pos, m};
+    return 1;
 }
 
-void solve(int caseno)
+void subtract(int a[])      // m -= a
 {
-    int n, k, m, pos, i;
-    string s;
+    int i;
 
-    cin >> n >> k >> m;
-
-    while(k && m)
+    for(i = 0; i < sz; i++)
     {
-        pii temp = call(n, k, m);
+        m[i] -= a[i];
 
-        pos = temp.ff;
-        m = temp.ss;
-
-        // show(pos);
-        // show(m);
-        // cout << "\n";
-
-        if(pos == -1)
+        if(m[i] < 0)
         {
-            cout << "-1\n";
-            return;
+            m[i] += 10;
+            a[i+1]++;
         }
-
-        for(i = 0; i < pos; i++)
-            cout << "0";
-        cout << "1";
-
-        n -= pos+1;
-        k--;
     }
+}
 
-    if(m == 0)
+void calc(int n, int k)
+{
+    if(n == 0)
     {
-        for(i = 0; i < n; i++)
-        {
-            if(i < k)
-                cout << "1";
-            else
-                cout << "0";
-        }
         cout << "\n";
+        return;
+    }
+
+    if(k == 0)
+    {
+        while(n--)
+            cout << "0";
+        cout << "\n";
+        return;
+    }
+
+    int i;
+    if(isGE(nCr[n-1][k], m))
+    {
+        cout << "0";
+        calc(n-1, k);
     }
     else
     {
-        for(i = 0; i < n; i++)
-        {
-            if(i < n-k)
-                cout << "0";
-            else
-                cout << "1";
-        }
-        cout << "\n";
+        cout << "1";
+        subtract(nCr[n-1][k]);
+        calc(n-1, k-1);
     }
+}
+
+void solve(int caseno)
+{    
+    int n, k, i;
+    string s;
+
+    cin >> n >> k >> s;
+
+    reverse(s.begin(), s.end());
+
+    for(i = 0; i < s.size(); i++)
+        m[i] = s[i] - '0';
+
+    if(!isGE(nCr[n][k], m))
+        cout << "-1\n";
+    else
+        calc(n, k);
 }
 
 int main()
 {
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
 
-    int T = 1, caseno = 0;
+    int T = 1, caseno = 0, i, j, k;
 
-    memset(nCr, -1, sizeof nCr);
+    nCr[0][0][0] = 1;
+    for(i = 1; i < 355; i++)
+    {
+        for(j = 0; j <= i; j++)
+        {
+            for(k = 0; k < sz; k++)
+            {
+                nCr[i][j][k] += nCr[i-1][j][k];
+
+                if(j)
+                    nCr[i][j][k] += nCr[i-1][j-1][k];
+
+                if(nCr[i][j][k] >= 10)
+                {
+                    nCr[i][j][k] -= 10;
+                    nCr[i][j][k+1] ++;
+                }
+            }
+        }
+    }
+
+    // for(i = 0; i <= 6; i++)
+    // {
+    //     for(j = 0; j <= i; j++)
+    //     {
+    //         show(i);
+    //         show(j);
+
+    //         cout << nCr[i][j][1] << nCr[i][j][0] << "\n";
+    //     }
+    // }
 
     cin >> T;
 
