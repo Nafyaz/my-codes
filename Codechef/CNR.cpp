@@ -39,7 +39,7 @@ void subtract(int a[])      // m -= a
         if(m[i] < 0)
         {
             m[i] += 10;
-            a[i+1]++;
+            m[i+1]--;
         }
     }
 }
@@ -83,8 +83,17 @@ void solve(int caseno)
 
     reverse(s.begin(), s.end());
 
-    for(i = 0; i < s.size(); i++)
-        m[i] = s[i] - '0';
+    for(i = 0; i < sz; i++)
+    {
+        if(i < s.size())
+            m[i] = s[i] - '0';
+        else
+            m[i] = 0;
+    }
+
+    // show(m[0]);
+    // show(m[1]);
+    // cout << "\n";
 
     if(!isGE(nCr[n][k], m))
         cout << "-1\n";
