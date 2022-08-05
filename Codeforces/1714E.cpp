@@ -37,7 +37,7 @@ void solve(int caseno)
 
     if(zeros == n)
     {
-        cout << "YES\n";
+        cout << "Yes\n";
         return;
     }
 
@@ -47,19 +47,19 @@ void solve(int caseno)
         {
             if(arr[i] != arr[0])
             {
-                cout << "NO\n";
+                cout << "No\n";
                 return;
             }
         }
 
-        cout << "YES\n";
+        cout << "Yes\n";
         return;
     }
 
     if((zeros > 0 && zeros < n) || (parity[0] && parity[1]))
-        cout << "NO\n";
+        cout << "No\n";
     else
-        cout << "YES\n";
+        cout << "Yes\n";
 }
 
 int main()
