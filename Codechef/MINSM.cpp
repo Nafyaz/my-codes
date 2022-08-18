@@ -7,11 +7,22 @@ using namespace std;
 #define ff first
 #define ss second
 #define MOD 1000000007
-#define MAXN 2000006
+#define MAXN 100005
 
 void solve(int caseno)
 {
+    ll n, i, a, g = 0;
 
+    cin >> n;
+
+    for(i = 0; i < n; i++)
+    {
+        cin >> a;
+
+        g = __gcd(a, g);
+    }
+
+    cout << g*n << "\n";
 }
 
 int main()
@@ -28,4 +39,3 @@ int main()
         solve(++caseno);
     }
 }
-

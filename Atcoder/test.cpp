@@ -1,58 +1,61 @@
-#include <bits/stdc++.h>
-#include <atcoder/modint>
+#include<bits/stdc++.h>
 using namespace std;
 
-using mint = atcoder::modint998244353;
+const int inf=0x3f3f3f3f;
 
-mint fact(const int n)
-{
-    static vector<mint> v = {1};
-    while ((int)v.size() <= n)
-        v.push_back(v.back() * v.size());
+int n,f[26][55][55],aux[55][55];
+vector<string> g[26];
+string t;
 
-    return v[n];
+void calc(string s){
+    memset(aux,0x3f,sizeof(aux));
+    for(int i=0;i<n;i++)aux[i][i]=0;
+    for(char c:s){
+        for(int i=0;i<n;i++)for(int j=n;j>=i;j--)if(aux[i][j]!=inf){
+            for(int k=j+1;k<=n;k++)if(f[c-'a'][j][k]!=inf){
+                aux[i][k]=min(aux[i][k],aux[i][j]+f[c-'a'][j][k]);
+            }
+            aux[i][j]=inf;
+        }
+    }
 }
 
-mint inv_fact(const int n)
-{
-    static vector<mint> u = {0, 1}, v = {1, 1};
-    for (int i = (int)u.size(); i <= n; ++i)
-    {
-        u.push_back(-mint(mint::mod() / i) * u[mint::mod() % i]);
-        v.push_back(v.back() * u.back());
-    }
-    return v[n];
-}
+int main(){
 
-mint binom(const int n, const int k)
-{
-    return fact(n) * inv_fact(k) * inv_fact(n - k);
-}
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    cout.tie(0);
 
-int main()
-{
-    int n, m, k;
-    cin >> n >> m >> k;
-    vector<int> deg(n);
-    while (m--)
+    string s;
+    cin>>s>>t;
+    n=t.size();
     {
-        int u, v;
-        cin >> u >> v;
-        u -= 1, v -= 1;
-        deg[u] += 1, deg[v] += 1;
+        int k;
+        cin>>k;
+        while(k--){
+            char c;
+            cin>>c;
+            g[c-'a'].emplace_back();
+            cin>>g[c-'a'].back();
+        }
     }
-    int odd = 0;
-    for (const int x : deg)
-    {
-        if (x % 2 == 1)
-            odd += 1;
+    memset(f,0x3f,sizeof(f));
+    for(int i=0;i<n;i++)f[t[i]-'a'][i][i+1]=0;
+    bool edit=1;
+    while(edit){
+        edit=0;
+        for(int i=0;i<26;i++){
+            for(auto &s:g[i]){
+                calc(s);
+                for(int j=0;j<n;j++)for(int k=j+1;k<=n;k++)if(f[i][j][k]>aux[j][k]+1){
+                    edit=1;
+                    f[i][j][k]=aux[j][k]+1;
+                }
+            }
+        }
     }
-    mint ans = 0;
-    for (int i = 0; i <= k; i += 2)
-    {
-        if (i <= odd and k - i <= n - odd)
-            ans += binom(odd, i) * binom(n - odd, k - i);
-    }
-    cout << ans.val() << '\n';
+    calc(s);
+    cout<<(aux[0][n]==inf?-1:aux[0][n]);
+
     return 0;
 }

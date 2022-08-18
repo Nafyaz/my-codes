@@ -11,7 +11,18 @@ using namespace std;
 
 void solve(int caseno)
 {
+    int a[5];
 
+    cin >> a[0] >> a[1] >> a[2] >> a[3] >> a[4];
+
+    sort(a, a+5);
+
+    if(a[0] == a[1] && a[1] == a[2] && a[3] == a[4])
+        cout << "Yes\n";
+    else if(a[0] == a[1] && a[2] == a[3] && a[3] == a[4])
+        cout << "Yes\n";
+    else
+        cout << "No\n";
 }
 
 int main()
@@ -21,11 +32,10 @@ int main()
 
     int T = 1, caseno = 0;
 
-    cin >> T;
+//    cin >> T;
 
     while(T--)
     {
         solve(++caseno);
     }
 }
-

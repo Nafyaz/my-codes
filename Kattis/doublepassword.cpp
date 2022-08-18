@@ -7,14 +7,24 @@ using namespace std;
 #define ss second
 #define show(x) cout << #x << ": " << x << "; "
 #define MOD 1000000007
-#define MAXN 200005
+#define MAXN 2000006
 
-ll a[MAXN];
-vector<ll> adj[MAXN];
 
-void call(ll node, ll pr)
+void solve(int caseno)
 {
-	
+    int ans, i;
+    string a, b;
+
+    cin >> a >> b;
+
+    ans = 1;
+    for(i = 0; i < 4; i++)
+    {
+        if(a[i] != b[i])
+            ans *= 2;
+    }
+
+    cout << ans << "\n";
 }
 
 int main()
@@ -22,18 +32,12 @@ int main()
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    ll n, i, x, y;
+    int T = 1, caseno = 0;
 
-    cin >> n; 
+//    cin >> T;
 
-    for(i = 1; i <= n; i++)
-        cin >> a[i];
-
-    for(i = 1; i < n; i++)
+    while(T--)
     {
-        cin >> x >> y;
-
-        adj[x].push_back(y);
-        adj[y].push_back(x);
+        solve(++caseno);
     }
 }

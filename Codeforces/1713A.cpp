@@ -11,7 +11,27 @@ using namespace std;
 
 void solve(int caseno)
 {
+    int n, i, x, y, minX, maxX, minY, maxY;
 
+    cin >> n;
+
+    minX = minY = 0;
+    maxX = maxY = 0;
+    for(i = 0; i < n; i++)
+    {
+        cin >> x >> y;
+
+        minX = min(minX, x);
+        maxX = max(maxX, x);
+
+        minY = min(minY, y);
+        maxY = max(maxY, y);
+    }
+
+    minX = abs(minX);
+    minY = abs(minY);
+
+    cout << 2*minX + 2*minY + 2*maxX + 2*maxY << "\n";
 }
 
 int main()
@@ -28,4 +48,3 @@ int main()
         solve(++caseno);
     }
 }
-

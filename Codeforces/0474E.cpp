@@ -65,8 +65,8 @@ int main()
 	for(auto &u : id)
 		u.ss = ++cnt;
 
-	id[INT_MIN] = 0;
-	id[INT_MAX] = cnt+1;
+	id[LLONG_MIN] = 0;
+	id[LLONG_MAX] = cnt+1;
 
 	// cout << "id:\n";
 	// for(auto u : id)

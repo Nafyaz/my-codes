@@ -11,7 +11,31 @@ using namespace std;
 
 void solve(int caseno)
 {
+    ll n, m, x, y;
 
+    cin >> n >> m >> x >> y;
+
+    if(x%2 != y%2)
+    {
+        cout << "Yes\n";
+        return;
+    }
+    else if(x%2 == 0 && y%2 == 0)
+    {
+        if((n+m-2)%2 == 0)
+            cout << "Yes\n";
+        else
+            cout << "No\n";
+        return;
+    }
+    else
+    {
+        if((n+m-2)%2 == 0)
+            cout << "No\n";
+        else
+            cout << "Yes\n";
+        return;
+    }
 }
 
 int main()
@@ -28,4 +52,3 @@ int main()
         solve(++caseno);
     }
 }
-

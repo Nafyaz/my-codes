@@ -11,7 +11,21 @@ using namespace std;
 
 void solve(int caseno)
 {
+    int n, sq, i;
 
+    cin >> n;
+
+    sq = sqrt(n+1);
+    if(sq*sq != n+1)
+    {
+        cout << "-1\n";
+        return;
+    }
+
+    cout << sq-1 << "\n";
+    for(i = 1; i < sq; i++)
+        cout << i << " ";
+    cout << "\n";
 }
 
 int main()

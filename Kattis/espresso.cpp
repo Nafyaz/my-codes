@@ -11,7 +11,32 @@ using namespace std;
 
 void solve(int caseno)
 {
+    int n, s, i, ans, rem, req;
+    string order;
 
+    cin >> n >> s;
+
+    ans = 0;
+    rem = s;
+    while(n--)
+    {
+        cin >> order;
+
+        req = order[0] - '0';
+
+        if(order.size() == 2)
+            req++;
+
+        if(req > rem)
+        {
+            ans++;
+            rem = s;
+        }
+
+        rem -= req;
+    }
+
+    cout << ans << "\n";
 }
 
 int main()
@@ -21,7 +46,7 @@ int main()
 
     int T = 1, caseno = 0;
 
-    cin >> T;
+//    cin >> T;
 
     while(T--)
     {

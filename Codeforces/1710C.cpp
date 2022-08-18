@@ -1,50 +1,61 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define pii pair<int, int>
 #define ll long long
-#define pll pair<ll, ll>
-#define ff first
-#define ss second
-#define show(x) cout << #x << ": " << x << "; "
-#define MOD 1000000007
-#define MAXN 100005
+#define MOD 998244353
+#define MAXN 200005
 
-ll k;
-ll a[MAXN];
+string s;
+ll dp[MAXN][8][8];
 
-bool isPossible(ll n, ll m)
+bool check(int bits, int idx)
 {
-    ll extra = 0, i, parts;
-
-    for(i = 0; i < k; i++)
-    {
-        parts = a[i]/m;
-
-        if(parts < 2)
-            continue;
-
-        if(n == 1 && extra == 0)
-            return 0;
-
-        extra += parts-2;
-        n -= 2;
-    }
-
-    return (n <= extra);
+    if(bits&(1<<idx))
+        return 1;
+    return 0;
 }
 
-void solve(int caseno)
+ll call(ll pos, ll isEqual, ll cond)
 {
-    ll n, m, i;
+    if(pos >= s.size())
+        return (cond == 7);
 
-    cin >> n >> m >> k;
+    if(dp[pos][isEqual][cond] != -1)
+        return dp[pos][isEqual][cond];
 
-    for(i = 0; i < k; i++)
-        cin >> a[i];
+    ll ret = 0, newIsEqual, newCond;
+    for(int bits = 0; bits < 8; bits++)
+    {
+        if((isEqual&1) && s[pos] == '0' && (bits&1))
+            continue;
+        if((isEqual&2) && s[pos] == '0' && (bits&2))
+            continue;
+        if((isEqual&4) && s[pos] == '0' && (bits&4))
+            continue;
 
-    sort(a, a+k, greater<ll>());
+        newIsEqual = isEqual;
+        if(s[pos] != '0' + check(bits, 0))
+            newIsEqual &= 6;
+        if(s[pos] != '0' + check(bits, 1))
+            newIsEqual &= 5;
+        if(s[pos] != '0' + check(bits, 2))
+            newIsEqual &= 3;
 
-    cout << ((isPossible(n, m) || isPossible(m, n))? "Yes\n" : "No\n");
+        bool aXorb = check(bits, 0) ^ check(bits, 1);
+        bool aXorc = check(bits, 0) ^ check(bits, 2);
+        bool bXorc = check(bits, 1) ^ check(bits, 2);
+
+        newCond = cond;
+        if(aXorb && aXorc)
+            newCond |= 4;
+        if(aXorb && bXorc)
+            newCond |= 2;
+        if(aXorc && bXorc)
+            newCond |= 1;
+
+        ret = (ret + call(pos+1, newIsEqual, newCond))%MOD;
+    }
+
+    return dp[pos][isEqual][cond] = ret;
 }
 
 int main()
@@ -52,12 +63,11 @@ int main()
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    int T = 1, caseno = 0;
+    ll i, bits;
 
-    cin >> T;
+    cin >> s;
 
-    while(T--)
-    {
-        solve(++caseno);
-    }
+    memset(dp, -1, sizeof dp);
+    cout << call(0, 7, 0);
 }
+ 

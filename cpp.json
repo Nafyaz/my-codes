@@ -13,19 +13,44 @@
 	// 	"description": "Log output to console"
 	// }
 
-	"Starting CPP": {
+	"Main Template": {
 		"prefix": "#ii",
 		"body": [
 			"#include<bits/stdc++.h>",
 			"using namespace std;",
-			"#define pii pair<int, int>",
-			"#define ll long long",
-			"#define pll pair<ll, ll>",
+			"typedef pair<int, int> pii;",
+			"typedef long long LL;",
+			"typedef pair<LL, LL> pLL;",
 			"#define ff first",
 			"#define ss second",
 			"#define show(x) cout << #x << \": \" << x << \"; \"",
-			"#define MOD 1000000007",
-			"#define MAXN 2000006",
+			"const int MOD = 1000000007;",
+			"const int MAXN = 2000006;",
+			"",
+			"int main()",
+			"{",
+			"\tios_base::sync_with_stdio(0);",
+			"\tcin.tie(0);",
+			"",
+			"\t$0",
+			"}"
+		],
+		"description": "Use this for problems without test cases"
+	},
+
+	"Cases Template": {
+		"prefix": "#it",
+		"body": [
+			"#include<bits/stdc++.h>",
+			"using namespace std;",
+			"typedef pair<int, int> pii;",
+			"typedef long long LL;",
+			"typedef pair<LL, LL> pLL;",
+			"#define ff first",
+			"#define ss second",
+			"#define show(x) cout << #x << \": \" << x << \"; \"",
+			"const int MOD = 1000000007;",
+			"const int MAXN = 2000006;",
 			"",
 			"void solve(int caseno)",
 			"{",
@@ -47,6 +72,6 @@
 			"\t}",
 			"}"
 		],
-		"description": "Use this for problem solving"
+		"description": "Use this for problems with test cases"
 	}
 }

@@ -9,9 +9,40 @@ using namespace std;
 #define MOD 1000000007
 #define MAXN 2000006
 
+int n, m;
+bool taken[12];
+
+void Print()
+{
+    for(int i = 1; i <= m; i++)
+    {
+        if(taken[i])
+            cout << i << " ";
+    }
+    cout << "\n";
+}
+
+void call(int pos, int prev)
+{
+    if(pos == n+1)
+    {
+        Print();
+        return;
+    }
+
+    for(int i = prev+1; i <= m; i++)
+    {
+        taken[i] = 1;
+        call(pos+1, i);
+        taken[i] = 0;
+    }
+}
+
 void solve(int caseno)
 {
+    cin >> n >> m;
 
+    call(1, 0);
 }
 
 int main()
@@ -21,7 +52,7 @@ int main()
 
     int T = 1, caseno = 0;
 
-    cin >> T;
+//    cin >> T;
 
     while(T--)
     {
