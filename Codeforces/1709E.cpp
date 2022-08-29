@@ -1,58 +1,53 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define pii pair<int, int>
-#define ll long long
-#define pll pair<ll, ll>
+typedef pair<int, int> pii;
+typedef long long LL;
+typedef pair<LL, LL> pLL;
 #define ff first
 #define ss second
 #define show(x) cout << #x << ": " << x << "; "
 #define MOD 1000000007
 #define MAXN 200005
 
-ll n, ans;
-ll a[MAXN];
-vector<ll> adj[MAXN];
-ll parent[MAXN];
-set<ll> st[MAXN];
+int ans;
+int a[MAXN];
+vector<int> adj[MAXN];
+set<int> st[MAXN];
 
-void dfs(ll node, ll p)
+void call(int node, int p)
 {
-    bool flag;
+    bool flag = 0;
     st[node].insert(a[node]);
 
-    flag = 1;
     for(auto nxt : adj[node])
     {
         if(nxt == p)
             continue;
 
-        if(flag == 0)
-        {
-            st[nxt].clear();
-            continue;
-        }
+        a[nxt] ^= a[node];
 
-        dfs(nxt, node);
+        call(nxt, node);
+
+        if(st[nxt].size() > st[node].size())
+            swap(st[nxt], st[node]);
 
         for(auto u : st[nxt])
         {
-            if(st[node].find(u) != st[node].end())
-            {
-                flag = 0;
-                break;
-            }
+            if(st[node].find(u ^ a[node] ^ a[p]) != st[node].end())
+                flag = 1;
 
-            st[node].insert(u^a[node]);
         }
-
-        st[nxt].clear();
-
-        if(flag == 0)
+        if(!flag)
         {
-            // show(node);
-            ans++;
-            st[node].clear();
+            for(auto u : st[nxt])
+                st[node].insert(u);
         }
+    }
+
+    if(flag)
+    {
+        ans++;
+        st[node].clear();
     }
 }
 
@@ -61,22 +56,21 @@ int main()
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    ll i, x, y;
+    int n, i, u, v;
 
-    cin >> n; 
+    cin >> n;
 
     for(i = 1; i <= n; i++)
         cin >> a[i];
 
     for(i = 1; i < n; i++)
     {
-        cin >> x >> y;
-
-        adj[x].push_back(y);
-        adj[y].push_back(x);
+        cin >> u >> v;
+        adj[u].push_back(v);
+        adj[v].push_back(u);
     }
 
-    dfs(1, 1);
+    call(1, 0);
 
     cout << ans << "\n";
 }

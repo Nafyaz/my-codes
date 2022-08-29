@@ -1,30 +1,45 @@
 #include<bits/stdc++.h>
 using namespace std;
-typedef pair<int, int> pii;
-typedef long long LL;
-typedef pair<LL, LL> pLL;
-#define ff first
-#define ss second
-#define show(x) cout << #x << ": " << x << "; "
-const int MOD = 1000000007;
-const int MAXN = 2000006;
-
+#define sz 200009
+set<int>mp[sz];
+int ans,arr[sz];
+std::vector<int> v[sz];
+void solve(int node,int par)
+{
+  int fs=0;
+  mp[node].insert(arr[node]);
+  for(int u:v[node])
+  {
+    if(u!=par)
+    {
+      arr[u]^=arr[node];
+      solve(u,node);
+      if(mp[u].size()>mp[node].size())
+        swap(mp[u],mp[node]);
+      for(int vv:mp[u])
+        if(mp[node].find(vv^arr[node]^arr[par])!=mp[node].end())
+         fs=1;
+      if(!fs)
+        for(int vv:mp[u])
+          mp[node].insert(vv);
+    }
+  }
+  if(fs)
+    ans++,mp[node].clear();
+} 
 int main()
 {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
-
-    int i, k, N = 4;
-    vector<int> perm = vector<int> (N, 0);
-    for (k = 1; k < N; k <<= 1) 
+    int n;
+    cin>>n;
+    for(int i=1;i<=n;i++)
+      cin>>arr[i];
+    for(int i=2;i<=n;i++)
     {
-        for (i = 0; i < k; i++) 
-        {
-            perm[i] <<= 1;
-            perm[i+k] = 1 + perm[i];
-        }
+      int a,b;
+      cin>>a>>b;
+      v[a].push_back(b);
+      v[b].push_back(a);
     }
-
-    for(i = 0; i < perm.size(); i++)
-        cout << perm[i] << " ";
+    solve(1,0);
+    cout<<ans;
 }

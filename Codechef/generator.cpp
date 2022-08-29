@@ -10,34 +10,12 @@ using namespace std;
 
 void solve(ll caseno)
 {
-    ll i, j, n = rand()%100 + 1, v;
-    bool taken[n+1] = {0};
+    int i, n = rand()%10+1;
 
     cout << n << "\n";
-    for(i = 1; i <= n; i++)
-    {
-        // show(i);
-        // cout << "\n";
-        v = rand() % n + 1;
-        if(!taken[v])
-        {
-            cout << v << " ";
-            taken[v] = 1;
-        }
-        else
-        {
-            for(j = v%n+1; j != v; j = j%n+1)
-            {
-                if(!taken[j])
-                {
-                    cout << j << " ";
-                    taken[j] = 1;
-                    break;
-                }
-            }
-        }        
-    }
 
+    for(i = 0; i < n; i++)
+        cout << rand()%n+1 << " ";
     cout << "\n";
 }
 

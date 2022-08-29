@@ -14,17 +14,5 @@ int main()
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    int i, powers, evens;
-
-    powers = evens = 0;
-    for(i = 1; i < MAXN; i++)
-    {
-        if(i%2 == 0)
-            evens++;
-        if((i&(i-1)) == 0)
-            powers++;
-
-        if(i%10000 == 0)
-            cout << i << ": " << (double)powers/evens*100 << "%\n";
-    }
+    
 }
