@@ -9,36 +9,22 @@ using namespace std;
 #define MOD 1000000007
 #define MAXN 2000006
 
-int arr[102];
-
 void solve(int caseno)
 {
-    int n, i;
+    int n, i, a, ans;
 
     cin >> n;
 
+    ans = 0;
     for(i = 0; i < n; i++)
-        cin >> arr[i];
-
-    if(n == 1)
     {
-        cout << "Cook\n";
-        return;
+        cin >> a;
+
+        if(a&1)
+            ans ^= (n-1 - i);
     }
 
-    if(n == 2)
-    {
-        cout << (arr[0]%2 == 0? "Cook\n" : "Chef\n");
-        return;
-    }
-
-    if(accumulate(arr, arr+n-2, 0) == 0 && arr[n-2]%2 == 0)
-    {
-        cout << "Cook\n";
-        return;
-    }
-
-    cout << "Chef\n";
+    cout << (ans? "Chef\n" : "Cook\n");
 }
 
 int main()
@@ -55,4 +41,3 @@ int main()
         solve(++caseno);
     }
 }
-

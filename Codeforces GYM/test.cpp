@@ -1,17 +1,18 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define pii pair<int, int>
-#define ll long long
-#define pll pair<ll, ll>
+typedef pair<int, int> pii;
+typedef long long LL;
+typedef pair<LL, LL> pLL;
 #define ff first
 #define ss second
 #define show(x) cout << #x << ": " << x << "; "
+#define INF 1000000000000015
 #define MOD 1000000007
 #define MAXN 2000006
 
 void solve(int caseno)
 {
-    cout << __gcd(0, 5);
+    
 }
 
 int main()
@@ -21,7 +22,7 @@ int main()
 
     int T = 1, caseno = 0;
 
-    // cin >> T;
+    cout << T <<;
 
     while(T--)
     {

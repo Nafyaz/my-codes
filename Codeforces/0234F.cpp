@@ -1,81 +1,65 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define ll long long
-#define show(x) cout << #x << ": " << x << "; "
-#define pll pair<ll, ll>
-#define pii pair<int, int>
+typedef pair<int, int> pii;
+typedef long long LL;
+typedef pair<LL, LL> pLL;
 #define ff first
 #define ss second
+#define show(x) cout << #x << ": " << x << "; "
 #define MOD 1000000007
 #define MAXN 2000006
 
-int n;
-int h[202];
-map<pair<pair<int, bool>, pii>, int> mp;
+LL n;
+LL h[202], dp[40004][202][3];
 
-int call(int pos, bool cur, int a, int b)
+LL call(LL a, LL b, LL pos, LL prevCol)
 {
-    if(pos == n)
+    
+    if(pos == n+1)
         return 0;
 
-    if(mp.find({{pos, cur}, {a, b}}) != mp.end())
-        return mp[{{pos, cur}, {a, b}}];
+    if(dp[a][pos][prevCol] != -1)
+        return dp[a][pos][prevCol];
 
-    int ret = INT_MAX, v0 = -1, v1 = -1;
 
-    if(cur == 0)
+    LL ret1, ret2;
+    ret1 = ret2 = INT_MAX;
+
+    if(a >= h[pos])
     {
-        if(a < h[pos])
-            return mp[{{pos, cur}, {a, b}}] = -1;
-        v0 = call(pos+1, 0, a-h[pos], b);
-        v1 = call(pos+1, 1, a-h[pos], b);
+        
+        if(prevCol == 1)
+            ret1 = min(h[pos-1], h[pos]) + call(a-h[pos], b, pos+1, 0);
+        else
+            ret1 = call(a-h[pos], b, pos+1, 0);
+        
+        // if(a == 1 && b == 0 && pos == 3 && prevCol == 1)
+        // {
+        //     show(h[pos-1]);
+        //     show(h[pos]);
+        //     show(ret1);
+        //     show(ret2);
+        //     cout << "\n";
+        // }
     }
-    else
+
+    if(b >= h[pos])
     {
-        if(b < h[pos])
-            return mp[{{pos, cur}, {a, b}}] = -1;
-        v0 = call(pos+1, 0, a, b-h[pos]);
-        v1 = call(pos+1, 1, a, b-h[pos]);
+        if(prevCol == 0)
+            ret2 = min(h[pos-1], h[pos]) + call(a, b-h[pos], pos+1, 1);
+        else
+            ret2 = call(a, b-h[pos], pos+1, 1);
     }
 
-    if(v0 == -1 && v1 == -1)
-        ret = -1;
+    // show(a);
+    // show(b);
+    // show(pos);
+    // show(prevCol);
+    // show(ret1);
+    // show(ret2);
+    // cout << "\n";
 
-    if(v0 != -1)
-        ret = min(ret, v0 + (cur == 1)*min(h[pos], h[pos+1]));
-    if(v1 != -1)
-        ret = min(ret, v1 + (cur == 0)*min(h[pos], h[pos+1]));
-
-    return mp[{{pos, cur}, {a, b}}] = ret;
-}
-
-void solve(int caseno)
-{
-    int a, b, i, v0, v1, ans = 202;
-
-    cin >> n >> a >> b;
-
-    for(i = 0; i < n; i++)
-        cin >> h[i];
-
-    v0 = call(0, 0, a, b);
-    v1 = call(0, 1, a, b);
-
-//    cout << mp[{{3, 1}, {1, 1}}] << "\n";
-
-    if(v0 == -1 && v1 == -1)
-        ans = -1;
-
-    if(v0 != -1)
-        ans = min(ans, v0);
-    if(v1 != -1)
-        ans = min(ans, v1);
-
-    cout << ans << "\n";
-
-//    show(v1);
-//    show(v2);
-//    cout << "\n";
+    return dp[a][pos][prevCol] = min(ret1, ret2);
 }
 
 int main()
@@ -83,15 +67,21 @@ int main()
     freopen("input.txt", "r", stdin);
     freopen("output.txt", "w", stdout);
 
-    ios_base::sync_with_stdio(false);
-    cin.tie(NULL);
+    // ios_base::sync_with_stdio(0);
+    // cin.tie(0);
 
-    int T = 1, caseno = 0;
+    LL i, a, b, ans;
 
-//    cin >> T;
+    cin >> n >> a >> b;
 
-    while(T--)
-    {
-        solve(++caseno);
-    }
+    for(i = 1; i <= n; i++)
+        cin >> h[i];
+
+    memset(dp, -1, sizeof dp);
+    ans = call(a, b, 1, 2);
+
+    if(ans == INT_MAX)
+        cout << "-1\n";
+    else
+        cout << ans << "\n";
 }

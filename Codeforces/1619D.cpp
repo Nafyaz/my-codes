@@ -1,100 +1,137 @@
 #include<bits/stdc++.h>
 using namespace std;
+typedef pair<int, int> pii;
+typedef long long LL;
+typedef pair<LL, LL> pLL;
 #define ff first
 #define ss second
+#define show(x) cout << #x << ": " << x << "; "
+#define MOD 1000000007
+#define MAXN 2000006
 
-vector<pair<int, int>> v[100005];
-int prefixMinLeft[100005], prefixMinRight[100005];
+int n, m;
+vector<vector<int>> p;
 
-bool cmp(pair<int, int> a, pair<int, int> b)
+bool calc(int x)
 {
-    if(a.ff == b.ff)
-        return a.ss > b.ss;
-    return a.ff > b.ff;
+    int i, j, satCount, maxSatCount, satShop;
+    int taken[n];
+    set<int> shops;
+
+    // show(x);
+
+    maxSatCount = 0;
+    for(i = 0; i < m; i++)
+    {
+        satCount = 0;
+        for(j = 0; j < n; j++)
+        {
+            if(p[i][j] >= x)
+                satCount++;
+        }
+
+        if(satCount > maxSatCount)
+        {
+            maxSatCount = satCount;
+            satShop = i;
+        }
+    }
+
+    memset(taken, -1, sizeof taken);
+    for(j = 0; j < n; j++)
+    {
+        if(p[satShop][j] >= x)
+            taken[j] = satShop;
+    }
+
+    // cout << "taken: ";
+    // for(j = 0; j < n; j++)
+    //     cout << taken[j] << " ";
+    // cout << "\n";
+
+    for(j = 0; j < n; j++)
+    {
+        if(taken[j] != -1)
+            continue;
+
+        for(i = 0; i < m; i++)
+        {
+            if(p[i][j] >= x)
+            {
+                taken[j] = i;
+                break;
+            }
+        }
+    }
+
+    for(i = 0; i < n; i++)
+    {
+        if(taken[i] != -1)   
+            shops.insert(taken[i]);
+        else
+            return 0;
+    }
+
+    return (shops.size() <= n-1);
+}
+
+void solve(int caseno)
+{
+    int i, j, low, high, mid, ans;
+
+    cin >> m >> n;
+
+    p = vector<vector<int>>(m, vector<int>(n, 0));
+
+    low = INT_MAX;
+    high = 0;
+    for(i = 0; i < m; i++)
+    {
+        for(j = 0; j < n; j++)
+        {
+            cin >> p[i][j];
+
+            low = min(low, p[i][j]);
+            high = max(high, p[i][j]);
+        }
+    }
+
+    // for(i = 0; i < m; i++)
+    // {
+    //     for(j = 0; j < n; j++)
+    //         cout << p[i][j] << " ";
+    //     cout << "\n";
+    // }
+
+    // cout << calc(9) << "\n";
+
+    while(low <= high)
+    {
+        mid = (low + high) / 2;
+
+        if(calc(mid))
+        {
+            ans = mid;
+            low = mid + 1;
+        }
+        else
+            high = mid - 1;
+    }
+
+    cout << ans << "\n";
 }
 
 int main()
 {
-    int t, n, m, ans, i, j;
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
 
-    cin >> t;
+    int T = 1, caseno = 0;
 
-    while(t--)
+    cin >> T;
+
+    while(T--)
     {
-        cin >> m >> n;
-
-        int p[m][n];
-
-        for(i = 0; i < m; i++)
-        {
-            for(j = 0; j < n; j++)
-                cin >> p[i][j];
-        }
-
-        set<int> s;
-        for(j = 0; j < n; j++)
-        {
-            v[j].clear();
-            for(i = 0; i < m; i++)
-                v[j].push_back({p[i][j], i});
-
-            sort(v[j].begin(), v[j].end(), cmp);
-
-            s.insert(v[j][0].ss);
-        }
-
-        cout << "v[j]:\n";
-        for(j = 0; j < n; j++)
-        {
-            for(auto u : v[j])
-                cout << u.ff << ", " << u.ss << "; ";
-            cout << "\n";
-        }
-
-        for(j = 0; j < n; j++)
-        {
-            if(!j)
-                prefixMinLeft[j] = v[j][0].ff;
-            else
-                prefixMinLeft[j] = min(prefixMinLeft[j-1], v[j][0].ff);
-        }
-
-        for(j = n-1; j >= 0; j--)
-        {
-            if(j == n-1)
-                prefixMinRight[j] = v[j][0].ff;
-            else
-                prefixMinRight[j] = min(prefixMinRight[j+1], v[j][0].ff);
-        }
-
-        if(s.size() < n)
-        {
-            cout << prefixMinLeft[n-1] << "\n";
-            continue;
-        }
-
-        cout << "s:\n";
-        for(auto u : s)
-            cout << u << " ";
-        cout << "\n";
-
-        ans = 0;
-        for(j = 0; j < n; j++)
-        {
-            for(i = 1; i < m && s.find(v[j][i].ss) == s.end(); i++);
-
-            cout << "j: " << j << ", i: " << i << "\n";
-
-            int mn = INT_MAX;
-            if(j > 0)
-                mn = min(mn, prefixMinLeft[j-1]);
-            mn = min(mn, v[j][i].ff);
-            if(j+1 < n)
-                mn = min(mn, prefixMinRight[j+1]);
-
-            ans = max(ans, mn);
-        }
-
-        cout << ans << "\n";
+        solve(++caseno);
     }
 }

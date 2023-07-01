@@ -1,67 +1,57 @@
 #include<bits/stdc++.h>
 using namespace std;
-
-void show(stack <int> x)
-{
-    while(!x.empty())
-    {
-        printf("%d ", x.top());
-        x.pop();
-    }
-    printf("\n");
-}
+#define LL long long
 
 int main()
 {
-    int l, flag = 0;
-    string a;
-    stack <int> s;
-    long long n, m, m2 = (1LL << 32);
+    LL lines;
+    string command;
+    stack <LL> s;
+    LL x, m, big = (1LL << 32);
 
-    scanf("%d", &l);
+    cin >> lines;
 
     s.push(0);
 
-    while(l--)
+    while(lines--)
     {
-        show(s);
-        cin >> a;
-        if(a == "add")
+        cin >> command;
+        if(command == "add")
         {
-            m = s.top() + 1;
+            x = s.top() + 1;
             s.pop();
-            s.push(m);
-            if(m >= m2)
+            s.push(x);
+            if(x >= big)
             {
-                printf("OVERFLOW!!!");
-                flag = 1;
-                break;
+                cout << "OVERFLOW!!!\n";
+                return 0;
             }
         }
-        else if(a == "for")
+        else if(command == "for")
         {
-            scanf("%d", &m);
+            cin >> m;
+
             s.push(m);
             s.push(0);
         }
         else
         {
+            x = s.top();
+            s.pop();
             m = s.top();
             s.pop();
-            m = m*s.top();
+
+            x = m*x + s.top();
             s.pop();
-            m = m + s.top();
-            s.pop();
-            s.push(m);
-            if(m >= m2)
+
+            s.push(x);
+            if(x >= big)
             {
-                printf("OVERFLOW!!!");
-                flag = 1;
-                break;
+                cout << "OVERFLOW!!!\n";
+                return 0;
             }
         }
     }
 
-    if(!flag)
-        printf("%d", s.top());
+    cout << s.top();
 }

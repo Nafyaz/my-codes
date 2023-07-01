@@ -1,45 +1,47 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define sz 200009
-set<int>mp[sz];
-int ans,arr[sz];
-std::vector<int> v[sz];
-void solve(int node,int par)
+typedef pair<int, int> pii;
+typedef long long LL;
+typedef pair<LL, LL> pLL;
+#define ff first
+#define ss second
+#define show(x) cout << #x << ": " << x << "; "
+#define INF 1000000000000015
+#define MOD 1000000007
+#define MAXN 2000006
+
+LL bigmod(LL a, LL p, LL mod)
 {
-  int fs=0;
-  mp[node].insert(arr[node]);
-  for(int u:v[node])
-  {
-    if(u!=par)
+    LL ret = 1;
+    while(p)
     {
-      arr[u]^=arr[node];
-      solve(u,node);
-      if(mp[u].size()>mp[node].size())
-        swap(mp[u],mp[node]);
-      for(int vv:mp[u])
-        if(mp[node].find(vv^arr[node]^arr[par])!=mp[node].end())
-         fs=1;
-      if(!fs)
-        for(int vv:mp[u])
-          mp[node].insert(vv);
+        if(p&1)
+            ret = (ret * a) % mod;
+        
+        a = (a*a) % mod;
+        p /= 2;
     }
-  }
-  if(fs)
-    ans++,mp[node].clear();
-} 
+
+    return ret;
+}
+
 int main()
 {
-    int n;
-    cin>>n;
-    for(int i=1;i<=n;i++)
-      cin>>arr[i];
-    for(int i=2;i<=n;i++)
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+    LL a, b, p, x;
+
+    cin >> a >> b >> p >> x;
+
+    for(LL n = 1; n <= x; n++)
     {
-      int a,b;
-      cin>>a>>b;
-      v[a].push_back(b);
-      v[b].push_back(a);
+        LL k = (n*bigmod(a, n, p))%p;
+
+        // show(n);
+        // show(k) << "\n";
+
+        if(k == b)
+            show(n);
     }
-    solve(1,0);
-    cout<<ans;
 }
