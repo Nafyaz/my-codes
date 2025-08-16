@@ -1,4 +1,4 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 typedef pair<int, int> pii;
 typedef long long LL;
@@ -10,57 +10,27 @@ typedef pair<LL, LL> pLL;
 #define MOD 1000000007
 #define MAXN 200005
 
-void solve()
-{
-    LL n, i, a, prev, ans, dir;
-
-    cin >> n;
-
-    ans = dir = 0;
-    prev = -1;
-    for(i = 0; i < n; i++)
-    {
-        cin >> a;
-
-        if(dir != 0)
-        {
-            if(dir == 1 && prev > a || dir == -1 && prev < a)
-            {
-                ans++;
-                dir = 0;
-            }
-            prev = a;
-            continue;
-        }
-
-        
-        if(prev == -1)
-            ans++;
-        else
-        {
-            if(prev < a)
-                dir = 1;
-            else if(prev > a)
-                dir = -1;
-        }
-
-        prev = a;
-    }
-
-    cout << ans << "\n";
-}
-
 int main()
 {
-    ios_base::sync_with_stdio(0);
-    cin.tie(0);
+    // ios_base::sync_with_stdio(0);
+    // cin.tie(0);
 
-    LL t;
+    freopen("output.txt", "r", stdin);
+    freopen("output.txt", "w", stdout);
 
-    cin >> t;
-
-    while(t--)
+    int l, r;
+    vector<pair<int, int>> v;
+    while (cin >> l)
     {
-        solve();
+        cin >> r;
+
+        v.push_back({l, r});
+    }
+
+    sort(v.begin(), v.end());
+
+    for (auto u : v)
+    {
+        cout << u.first << " " << u.second << "\n";
     }
 }

@@ -1,25 +1,29 @@
 #include<bits/stdc++.h>
 using namespace std;
-#define ll long long
-#define pll pair<ll, ll>
-#define ff first
-#define ss second
+
+#include<ext/pb_ds/assoc_container.hpp>
+#include<ext/pb_ds/tree_policy.hpp>
+using namespace __gnu_pbds;
+template<typename T>
+using ordered_set = tree<T, null_type,less<T>, rb_tree_tag, tree_order_statistics_node_update>;
+
 #define show(x) cout << #x << ": " << x << "; "
 #define MOD 1000000007
 #define MAXN 2000006
 
-pll a[10];
+int a[MAXN];
 
-void solve(ll caseno)
+bool cmp(int x, int y)
 {
-    for(ll i = 0; i < 10; i++)
+    if (x%2 != y%2)
     {
-        a[i].ff = i;
-        a[i].ss = 2*i;
+        return x%2 > y%2;
     }
 
-    for(auto [x, y] : a)
-        cout << x << " " << y << "\n";
+    if (x%2 == 0)
+        return x < y;
+    else
+        return x > y;
 }
 
 int main()
@@ -27,12 +31,15 @@ int main()
     ios_base::sync_with_stdio(0);
     cin.tie(0);
 
-    ll T = 1, caseno = 0;
+    int n;
+    cin >> n;
 
-    // cin >> T;
+    for (int i = 0; i < n; i++)
+        cin >> a[i];
 
-    while(T--)
-    {
-        solve(++caseno);
-    }
+    sort(a, a+n, cmp);
+
+    for (int i = 0; i < n; i++)
+        cout << a[i] << " ";
+    cout << "\n";
 }
