@@ -5,14 +5,16 @@ using namespace std;
 
 long long bigmod(long long a, long long p, long long mod)
 {
-    if (p == 0)
-        return 1;
+    long long ret = 1;
 
-    long long ret = bigmod(a, p / 2, mod);
-    ret = (ret * ret) % mod;
+    while (p)
+    {
+        if (p & 1)
+            ret = (ret * a) % mod;
 
-    if (p & 1)
-        ret = (ret * a) % mod;
+        a = (a * a) % mod;
+        p >>= 1;
+    }
 
     return ret;
 }

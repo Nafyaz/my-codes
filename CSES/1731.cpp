@@ -1,88 +1,71 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-#define ll long long
-#define pll pair<ll, ll>
-#define ff first
-#define ss second
-#define show(x) cout << #x << ": " << x << "; "
-#define MOD 1000000007
-#define MAXN 1000006
 
-int n, id;
+#define MAXN 1000006
+#define MOD 1000000007
+
 string s;
 int trie[MAXN][26];
-bool endPoint[MAXN];
-int dp[5003];
+bool hasEnded[MAXN];
+int id;
+int dp[MAXN];
 
-void Add(string t)
+void Add(string w)
 {
-    int i, r = 0;
-    for(i = 0; i < t.size(); i++)
-    {
-        if(trie[r][t[i] - 'a'] == 0)
-            trie[r][t[i] - 'a'] = ++id;
+    int r = 0;
 
-        r = trie[r][t[i] - 'a'];
+    for (auto c : w)
+    {
+        if (trie[r][c - 'a'] == 0)
+            trie[r][c - 'a'] = ++id;
+
+        r = trie[r][c - 'a'];
     }
 
-    endPoint[r] = 1;
+    hasEnded[r] = true;
 }
 
-int call(int pos)
+int func(int idx)
 {
-    if(pos == n)
+    if (idx == s.size())
         return 1;
 
-    if(dp[pos] != -1)
-        return dp[pos];
+    if (dp[idx] != -1)
+        return dp[idx];
 
-    int i, r = 0, ret = 0;
-
-    for(i = pos; i < n; i++)
+    int r = 0, ret = 0;
+    for (int i = idx; i < s.size(); i++)
     {
         r = trie[r][s[i] - 'a'];
-        
-        if(r == 0)
+
+        if (r == 0)
             break;
 
-        if(endPoint[r] == 1)
-            ret = (ret + call(i+1)) % MOD;
+        if (hasEnded[r])
+            ret = (ret + func(i + 1)) % MOD;
     }
 
-    return dp[pos] = ret;
-}
-
-void solve(int caseno)
-{
-    int i, k;
-    string t;
-
-    cin >> s;
-    n = s.size();
-
-    cin >> k;
-    while(k--)
-    {
-        cin >> t;
-
-        Add(t);
-    }
-
-    memset(dp, -1, sizeof dp);
-    cout << call(0) << "\n";
+    return dp[idx] = ret;
 }
 
 int main()
 {
     ios_base::sync_with_stdio(0);
-    cin.tie(0);
+    cin.tie(NULL);
 
-    int T = 1, caseno = 0;
+    cin >> s;
 
-    // cin >> T;
+    int k;
+    cin >> k;
 
-    while(T--)
+    for (int i = 0; i < k; i++)
     {
-        solve(++caseno);
+        string w;
+        cin >> w;
+
+        Add(w);
     }
+
+    memset(dp, -1, sizeof dp);
+    cout << func(0) << "\n";
 }
