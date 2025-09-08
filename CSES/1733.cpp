@@ -1,58 +1,46 @@
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-typedef pair<int, int> pii;
-typedef long long LL;
-typedef pair<LL, LL> pLL;
-#define ff first
-#define ss second
-#define show(x) cout << #x << ": " << x << "; "
-#define INF 1000000000000015
-#define MOD 1000000007
-#define MAXN 1000006
 
-LL base = 31, Hash[MAXN];
-
-LL bigmod(LL a, LL p)
+vector<int> Z(string s)
 {
-    LL ret = 1;
-    while(p)
+    int n = s.size();
+    vector<int> z(n, 0);
+
+    for (int i = 1, l = 0, r = 0; i < n; i++)
     {
-        if(p&1)
-            ret = (ret * a) % MOD;
-        a = (a*a) % MOD;
-        p /= 2;
+        if (i <= r)
+            z[i] = min(z[i - l], r - i + 1);
+
+        while (i + z[i] < n && s[i + z[i]] == s[z[i]])
+            z[i]++;
+
+        if (i + z[i] - 1 > r)
+        {
+            l = i;
+            r = i + z[i] - 1;
+        }
     }
 
-    return ret;
+    return z;
 }
 
 int main()
 {
     ios_base::sync_with_stdio(0);
-    cin.tie(0);
+    cin.tie(NULL);
 
-    LL n;
     string s;
-    vector<LL> ans;
-
+    int n;
     cin >> s;
     n = s.size();
 
-    for(LL i = 1; i <= n; i++)
-        Hash[i] = (Hash[i-1] * base + (s[i-1] - 'a' + 1)) % MOD;
-    
-    for(LL len = 0; len < n; len++)
-    {
-        LL h1 = Hash[len];
-        LL h2 = (Hash[n] - (Hash[n-len] * bigmod(base, len)%MOD) + MOD) % MOD;
+    vector<int> z = Z(s);
 
-        if(h1 == h2)
-            ans.push_back(n - len);
+    for (int i = 1; i < n; i++)
+    {
+        if (i + z[i] == n)
+            cout << i << " ";
     }
 
-    reverse(ans.begin(), ans.end());
-
-    for(auto u : ans)
-        cout << u << " ";
-    cout << "\n";
+    cout << n << "\n";
 }
