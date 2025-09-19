@@ -1,12 +1,35 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-void Push(stack<pair<long long, long long>> stk, long long x) {
-    if (stk.empty())
-        stk.push({x, x});
-    else
-        stk.push({x, min(x, stk.top().second)});
-}
+template <typename T>
+class Stack
+{
+    stack<pair<T, T>> stk;
+
+public:
+    bool empty()
+    {
+        return stk.empty();
+    }
+
+    void push(T x)
+    {
+        if (stk.empty())
+            stk.push({x, x});
+        else
+            stk.push({x, min(x, stk.top().second)});
+    }
+
+    void pop()
+    {
+        stk.pop();
+    }
+
+    pair<T, T> top()
+    {
+        return stk.top();
+    }
+};
 
 int main()
 {
@@ -19,7 +42,7 @@ int main()
     long long x, a, b, c, XOR = 0;
     cin >> x >> a >> b >> c;
 
-    stack<pair<long long, long long>> stk1, stk2;
+    Stack<long long> stk1, stk2;
 
     for (int i = 0; i < n; i++)
     {
@@ -30,13 +53,12 @@ int main()
             {
                 while (!stk1.empty())
                 {
-                    Push(stk2, stk1.top().first);
+                    stk2.push(stk1.top().first);
                     stk1.pop();
                 }
             }
 
-            Push(stk1, x);
-
+            stk1.push(x);
             stk2.pop();
 
             long long mn;
@@ -50,9 +72,9 @@ int main()
 
         else
         {
-            Push(stk1, x);
+            stk1.push(x);
 
-            if (i == k-1)
+            if (i == k - 1)
                 XOR ^= stk1.top().second;
         }
 
