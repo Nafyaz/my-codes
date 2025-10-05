@@ -18,7 +18,7 @@ bool check(int ch, int r1, int r2)
             c1++;
         else
             c2++;
-        
+
         if (cnt == 2)
             return true;
     }
